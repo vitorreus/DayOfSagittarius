@@ -1,23 +1,31 @@
 Fleet = Node.extend({
 	ships:15000,
 	owner:null, /*Player*/
-	graphics:null,
+	transform:null,
+	engines:null, 
+	subSystems:null,
+	baseSpeed:1, //depends on engines engine susbsystem lvl
 	init:function(){
-		this.addChild(new SubsystemHandler());
+		this.subSystems = new SubsystemHandler();
+		this.addChild(this.subSystems);
+
+		this.engines = new GotoPosition(this);
+		this.addChild(this.engines)
 	},
-	fixedUpdate:function(){
-		/*graphics.x+= 1;
-		graphics.y+= 1;  */
+	FixedUpdate:function(){
+		/*this.transform.x+= 1;
+		this.transform.y+= 1;  */
+		this.engines.speed = this.subSystems.getRelativeEnergyLevel("engine")
 	},
 	Start:function(scene){
-		graphics = new createjs.Shape(); 
-		graphics.addEventListener("click",this.handleClick);
-		graphics.x = 50;
-		graphics.y = 50;
+		this.transform = new createjs.Shape(); 
+		this.transform.addEventListener("click",this.handleClick);
+		this.transform.x = 50;
+		this.transform.y = 50;
 		
 
 
-		graphics.graphics.beginFill("#000000").drawCircle(0,0,50);
+		this.transform.graphics.beginFill("#000000").drawCircle(0,0,50);
 		 
 	 
 	 
@@ -25,16 +33,9 @@ Fleet = Node.extend({
 		//createjs.Tween.get(ball,{loop:true}).to({x:450}, 3000).to({x:50},3000);
 		
 
-		stage.addChild(graphics);
+		stage.addChild(this.transform);
 		//stage.removeChild(ball);
-	},
-	Event:function(e){ 
-		if (e.name == "stagemousedown"){
-			/*graphics.x = e.evt.stageX;
-			graphics.y = e.evt.stageY;*/
-			createjs.Tween.get(graphics,{loop:false}).to({x:e.evt.stageX,y:e.evt.stageY}, 1000);
-		}
-	},
+	}, 
 	handleClick:function (event){
 		console.log("click");
 		var bmp = new createjs.Bitmap(queue.getResult("bg"));

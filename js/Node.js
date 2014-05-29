@@ -1,6 +1,8 @@
 var Node = Class.extend({
 	objects:[], 
+	parent:null,
 	addChild:function(obj){
+		obj.parent = this;
 		this.objects.push(obj);
 	},
 	add:function(obj){
@@ -14,10 +16,10 @@ var Node = Class.extend({
 			}
 		}
 	},
-	fixedUpdate:function(arg){
+	FixedUpdate:function(arg){
 		for (var i = 0; i < this.objects.length ; i ++){
 			if (this.objects[i] != this  ){
-				this.objects[i].fixedUpdate(arg);
+				this.objects[i].FixedUpdate(arg);
 			}
 		}
 	},

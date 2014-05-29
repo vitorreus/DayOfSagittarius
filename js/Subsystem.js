@@ -71,11 +71,15 @@ SubsystemHandler = Class.extend({
 		if (lvl > this.subSystems.maxLevel ) lvl = this.subSystems.maxLevel;
 		this.subSystems.energyLevel[subSystem] = lvl;
 	},
-	getEnergyLevel:function(subSystem,lvl){//TODO:move to subsystems class
+	getEnergyLevel:function(subSystem){//TODO:move to subsystems class
 		if (this.subSystems.energyLevel[subSystem] == undefined) return 0 ;
 		return this.subSystems.energyLevel[subSystem];
 	},
-	fixedUpdate:function(){
+	getRelativeEnergyLevel:function(subSystem){//TODO:move to subsystems class
+		 
+		return  this.getEnergyLevel(subSystem)/this.subSystems.maxLevel;
+	},
+	FixedUpdate:function(){
 		//this._super();
 		this.chargeCapacitor();
 		this.supplySubSystems();

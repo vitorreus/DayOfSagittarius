@@ -11,7 +11,7 @@ function handleComplete(){
 	app.Start();
 
 	setInterval( function(a){return function (){a.draw()}}(app),1000 /*60fps*/ ); //try to do dynamic? Or will it be automatically slowed down and fixedupdate will have no problem?
-	setInterval( function(a){return function (){a.fixedUpdate()}}(app),1000/60 /*60fps*/ );
+	setInterval( function(a){return function (){a.FixedUpdate()}}(app),1000/60 /*60fps*/ );
 
 	createjs.Ticker.addEventListener("tick",tick);
 	//setInterval(tick,1000/60);
