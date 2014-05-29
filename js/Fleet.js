@@ -10,7 +10,14 @@ Fleet = Node.extend({
 		aggressive: Weapon, Engine, Shield //shield is the last because its agile aggressive
 		defensive: Shield, Weapon, Engine  //player has more control over weapons, thats why its second
 		speed: Engine, Weapon, Shield //same as above
+
+		// no, weapons wont change lvl, they will just not fire.
+		// also, maybe the first one could be engines, because the player also has some degree of controll over it
+		//therefore we should remove this player stance thing, and define the priorities:
+		//first engine goes automatticaly down, then shields. 
+		This will be good when the ghost-priorities comes in practive
 		*/
+
 		maxLevel:4,
 		energyLevel:{ /*up to 4*/
 			shield:1,
@@ -18,7 +25,7 @@ Fleet = Node.extend({
 			engine:1
 		},
 		energyUsageByLevel:{ /*up to 4*/
-			shield:.1/3, //reactor power divided by 3
+			shield:.03, //0.03 is good, because power regenerates on lvl 3, but very slowly
 			weapon:20, //TODO:this is instant.. 
 			engine:.03 //TODO:this is only used when moving.. 
 		},
@@ -32,6 +39,8 @@ Fleet = Node.extend({
 			//this will provide the "best try" for the energy, decaying 1 lvl until zero, trying to suply the subsystem
 			if (this.subSystems.energyLevel[subSystem] == 0) continue;
 			while(this.nextEnergyLevel(subSystem) < 0){
+				//TODO:save the user-defined level, so we can return to it once power is back
+				//also we wont change the lvl of the weapon, we just wont fire 
 				this.subSystems.energyLevel[subSystem] --;
 				if (this.subSystems.energyLevel[subSystem] == 0) continue;
 			}
@@ -65,7 +74,9 @@ Fleet = Node.extend({
 		var barsHeight = 100;
 		$("#capacitor div").css({height:(this.energy/this.maxEnergy)*barsHeight});
 		for (var subSystem in this.subSystems.energyLevel){
-			$("#" + subSystem+  " div").css({height:(this.getEnergyLevel(subSystem)/this.subSystems.maxLevel)*barsHeight});
+			$("#" + subSystem+  " div")
+				.css({height:(this.getEnergyLevel(subSystem)/this.subSystems.maxLevel)*barsHeight})
+				.text(this.getEnergyLevel(subSystem));
 			
 		}
 	},
