@@ -4,7 +4,7 @@ var Node = Class.extend({
 	add:function(obj){
 		this.objects.push(obj);
 	},
-	draw:function(arg){
+	draw:function(arg){ //TODO:Deprecated, using CreateJS now
 		for (var i = 0; i < this.objects.length ; i ++){
 			this.objects[i].draw(arg);
 		}
@@ -16,7 +16,7 @@ var Node = Class.extend({
 	},
 	start:function(scene){
 		for (var i = 0; i < this.objects.length ; i ++){
-			this.objects[i].start(arg);
+			this.objects[i].start(scene);
 		}
 	}
 

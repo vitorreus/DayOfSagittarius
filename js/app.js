@@ -16,25 +16,8 @@ setInterval( function(a){return function (){a.fixedUpdate()}}(app),1000/60 /*60f
 
 
 function handleComplete(){
-	var ball = new createjs.Shape();
-	
-	ball.addEventListener("click",handleClick);
 
-	
-
-
-	ball.graphics.beginFill("#000000").drawCircle(0,0,50);
-	ball.x = 50;
-	ball.y = 200;
- 
- 
-
-	createjs.Tween.get(ball,{loop:true}).to({x:450}, 3000).to({x:50},3000);
-	
-
-	stage.addChild(ball);
-	//stage.removeChild(ball);
-
+	app.start();
 	createjs.Ticker.addEventListener("tick",tick);
 	//setInterval(tick,1000/10);
 	
