@@ -6,15 +6,19 @@
 <script type="text/javascript" src="lib/jquery.js"></script>
 <script type="text/javascript" src="js/Class.js"></script>
 <script type="text/javascript" src="js/Node.js"></script>
+<script type="text/javascript" src="js/Subsystem.js"></script>
 <script type="text/javascript" src="js/Fleet.js"></script>
 <script type="text/javascript" src="js/app.js"></script>
 
 
 
- <script src='http://cdn.html5quintus.com/v0.2.0/quintus-all.js'></script>
+ <script src='lib/createjs.js'></script>
  <script type="text/javascript" src="js/Player.js"></script>
-
-<body> 
+ 
+<body onload="init()"> 
+	<canvas id="myCanvas" width="500" height="500">
+		No canvas support
+	<canvas>
 	<div id="energy">
 		<div >
 			<div id="capacitor">

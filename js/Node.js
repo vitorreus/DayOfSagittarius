@@ -13,6 +13,11 @@ var Node = Class.extend({
 		for (var i = 0; i < this.objects.length ; i ++){
 			this.objects[i].fixedUpdate(arg);
 		}
+	},
+	start:function(scene){
+		for (var i = 0; i < this.objects.length ; i ++){
+			this.objects[i].start(arg);
+		}
 	}
-	
+
 })

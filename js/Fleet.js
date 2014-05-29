@@ -80,5 +80,8 @@ Fleet = Node.extend({
 			
 		}
 	},
+	start:function(scene){
+		
+	}
 
 })
