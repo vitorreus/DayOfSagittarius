@@ -26,4 +26,6 @@ window.addEventListener("load",function() {
 	        .controls(true).touch()
 	        // Enable sounds.
 	        .enableSound(); 
+
+	Q.touch(Q.SPRITE_ALL);
 });
