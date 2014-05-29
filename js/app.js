@@ -3,27 +3,23 @@ Player = Class.extend();
 
 
 var stage;
-app  = new Node(); 
-fleet1 = new Fleet(stage);
-//fleet1.add(new Fleet());
-app.add(fleet1);
-
-
-setInterval( function(a){return function (){a.draw()}}(app),1000 /*60fps*/ ); //try to do dynamic? Or will it be automatically slowed down and fixedupdate will have no problem?
-setInterval( function(a){return function (){a.fixedUpdate()}}(app),1000/60 /*60fps*/ );
-
-// window.addEventListener("load",function() {
-
-
 function handleComplete(){
+	app  = new Node(); 
+	fleet1 = new Fleet();
+	//fleet1.add(new Fleet());
+	app.add(fleet1);
+	app.Start();
 
-	app.start();
+	setInterval( function(a){return function (){a.draw()}}(app),1000 /*60fps*/ ); //try to do dynamic? Or will it be automatically slowed down and fixedupdate will have no problem?
+	setInterval( function(a){return function (){a.fixedUpdate()}}(app),1000/60 /*60fps*/ );
+
 	createjs.Ticker.addEventListener("tick",tick);
-	//setInterval(tick,1000/10);
+	//setInterval(tick,1000/60);
 	
 
 	stage.on("stagemousedown", function(evt) {
-	console.log("the canvas was clicked at "+evt.stageX+","+evt.stageY);
+		console.log("the canvas was clicked at "+evt.stageX+","+evt.stageY);
+		app.Event({name:"stagemousedown",evt:evt});
 	})
  
 }
@@ -44,11 +40,3 @@ function tick(event){
 
 }
 
-function handleClick(event){
-	console.log("click");
-	var bmp = new createjs.Bitmap(queue.getResult("bg"));
-	bmp.x = Math.random()*500;
-	bmp.y = Math.random()*500;
-
-	stage.addChild(bmp);
-}

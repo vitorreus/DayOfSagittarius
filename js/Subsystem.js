@@ -10,7 +10,8 @@ Subsystem = Class.extend({
 Shield = Subsystem.extend({ 
 });
 
-Subsystem= Class.extend({
+SubsystemHandler = Class.extend({
+	objects:[],
 	energy:0,
 	maxEnergy:100,
 	reactorPower:.1, /*per fixeUpdate*/ 
@@ -90,7 +91,7 @@ Subsystem= Class.extend({
 				.text(this.getEnergyLevel(subSystem));
 			
 		}
-	}
+	} 
 });
 
 
