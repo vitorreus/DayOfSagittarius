@@ -24,7 +24,7 @@ RotateTowards = Node.extend({
 		if (this.active && this.goal){  
 			var deg = this.parent.transform.rotation;
 			var currentDirection = new Vector(Math.cos(degToRad(deg)),Math.sin(degToRad(deg)));
-			var currentDirection = Vector.lerp(currentDirection,this.goal,.1);
+			currentDirection = Vector.lerp(currentDirection,this.goal,this.speed*.1);
 			 
 
 			//angleTo will always be positive
@@ -35,15 +35,10 @@ RotateTowards = Node.extend({
 				rotator.phi * Math.cos(rotator.theta)
 			   + rotator.theta); 
 
-			/*this.parent.transform.x -= direction.x*this.speed; 
-			this.parent.transform.y  -= direction.y*this.speed; 
-
-			//check arrival
-			var distance = new Vector(this.parent.transform.x,this.parent.transform.y)
-				.subtract(this.goal);
-			if (distance.length() <= this.speed){
+			//check arrival 
+			if (currentDirection.angleTo(this.goal)  <= degToRad(1)){
 				this.active = false;  
-			} */
+			}
 		}
 	}
 

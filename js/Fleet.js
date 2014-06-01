@@ -22,8 +22,9 @@ Fleet = Node.extend({
 	FixedUpdate:function(){
 		/*this.transform.x+= 1;
 		this.transform.y+= 1;  */
-		this.engine.speed = this.subSystems.getRelativeEnergyLevel("engine");
-		//this.transform.rotation++;
+		this.engine.maxSpeed = this.subSystems.getRelativeEnergyLevel("engine");
+		this.engine.acceleration = this.subSystems.getRelativeEnergyLevel("engine");  
+		this.rotationEngine.speed = this.subSystems.getRelativeEnergyLevel("engine"); 
 	},
 	Start:function(scene){
 		this.transform = new createjs.Shape(); 
@@ -34,23 +35,14 @@ Fleet = Node.extend({
 
 
 		this.transform.graphics.beginFill("#000000");
-		//this.transform.graphics.drawCircle(0,0,50);
-
-
-		//this.transform.graphics.beginStroke("black"); 
+		//this.transform.graphics.drawCircle(0,0,50);  
 
 		var fleetSize = 50; 
 		this.transform.graphics
 			.moveTo(-fleetSize, -fleetSize)
 			.lineTo(fleetSize, 0)
 			.lineTo(-fleetSize, fleetSize)
-			.lineTo(-fleetSize, -fleetSize);
-		 
-	 	
-	 
-
-		//createjs.Tween.get(ball,{loop:true}).to({x:450}, 3000).to({x:50},3000);
-		
+			.lineTo(-fleetSize, -fleetSize);  
 
 		stage.addChild(this.transform);
 		//stage.removeChild(ball);

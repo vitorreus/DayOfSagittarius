@@ -89,7 +89,7 @@ SubsystemHandler = Class.extend({
 	isActive:function(subSysten){
 		switch(subSysten){
 			case "engine":
-				return this.parent.engine.active;
+				return this.parent.engine.active || this.parent.rotationEngine.active;
 				break;
 			case "weapon": 
 				return false; //should look more deeply into this
