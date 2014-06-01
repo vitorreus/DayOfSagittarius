@@ -11,7 +11,7 @@ Shield = Subsystem.extend({
 });
 
 SubsystemHandler = Class.extend({
-	objects:[],
+	//objects:[],
 	energy:0,
 	maxEnergy:100,
 	reactorPower:.1, /*per fixeUpdate*/ 

@@ -5,10 +5,23 @@ Player = Class.extend();
 var stage;
 function handleComplete(){
 	app  = new Node(); 
-	fleet1 = new Fleet();
+
+	app.addChild(new Fleet());
+
+	
+	fleet1 = new Fleet(); 
 	//fleet1.add(new Fleet());
-	app.add(fleet1);
+	var player = new HumanPlayer();
+	player.addFleet(fleet1);
+	//app.addChild(new Node());
+	app.addChild(fleet1);
+	app.addChild(player);
+	
 	app.Start();
+	setTimeout(function(){
+		fleet1.transform.x = 300;
+		fleet1.transform.y = 300;
+	},1);
 
 	setInterval( function(a){return function (){a.draw()}}(app),1000 /*60fps*/ ); //try to do dynamic? Or will it be automatically slowed down and fixedupdate will have no problem?
 	setInterval( function(a){return function (){a.FixedUpdate()}}(app),1000/60 /*60fps*/ );
@@ -18,7 +31,6 @@ function handleComplete(){
 	
 
 	stage.on("stagemousedown", function(evt) {
-		console.log("the canvas was clicked at "+evt.stageX+","+evt.stageY);
 		app.Event({name:"stagemousedown",evt:evt});
 	})
  

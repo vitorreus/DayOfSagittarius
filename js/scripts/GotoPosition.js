@@ -9,12 +9,9 @@ GotoPosition = Node.extend({
 	init:function(parent){
 		//this.parent  = parent;
 	},
-	Event:function(e){ 
-		if (e.name == "stagemousedown"){
-			this.active = true;
-			this.goal = new Vector( e.evt.stageX,e.evt.stageY)
-			//console.log.
-		}
+	moveTo:function(pos){
+		this.active = true;
+		this.goal = pos;
 	},
 	FixedUpdate:function(){
 		if (this.active){ 

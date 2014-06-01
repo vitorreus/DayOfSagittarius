@@ -8,6 +8,7 @@ Fleet = Node.extend({
 	baseSpeed:1, //depends on engines engine susbsystem lvl
 	selected:false, //TODO when micromanagement is working
 	init:function(){
+		this._super();
 		this.subSystems = new SubsystemHandler();
 		this.addChild(this.subSystems);
 
@@ -20,11 +21,20 @@ Fleet = Node.extend({
 		this.direction = new Vector(0,1);
 	},
 	FixedUpdate:function(){
+		this._super();
 		/*this.transform.x+= 1;
 		this.transform.y+= 1;  */
 		this.engine.maxSpeed = this.subSystems.getRelativeEnergyLevel("engine");
 		this.engine.acceleration = this.subSystems.getRelativeEnergyLevel("engine");  
 		this.rotationEngine.speed = this.subSystems.getRelativeEnergyLevel("engine"); 
+	},
+	moveTo:function(pos){
+		console.log(pos);
+		this.engine.moveTo(pos); 
+		this.lookAt(pos)
+	},
+	lookAt:function(pos){ 
+		this.rotationEngine.lookAt(pos); 
 	},
 	Start:function(scene){
 		this.transform = new createjs.Shape(); 
@@ -48,12 +58,20 @@ Fleet = Node.extend({
 		//stage.removeChild(ball);
 	}, 
 	handleClick:function (event){
+		//this should be someting with input
 		console.log("click");
 		var bmp = new createjs.Bitmap(queue.getResult("bg"));
 		bmp.x = Math.random()*500;
 		bmp.y = Math.random()*500;
 
 		stage.addChild(bmp);
+	},
+	Event:function(e){ 
+		if (e.name == "stagemousedown"){
+			//this.moveTo(new Vector( e.evt.stageX,e.evt.stageY)); 
+			 
+		}
+
 	}
 
 })

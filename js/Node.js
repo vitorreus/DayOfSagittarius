@@ -1,13 +1,12 @@
 var Node = Class.extend({
-	objects:[], 
+	objects:null, 
 	parent:null,
 	addChild:function(obj){
 		obj.parent = this;
 		this.objects.push(obj);
 	},
-	add:function(obj){
-		console.log("Node.add method is Deprecated");
-		this.addChild(obj);
+	init:function(){
+		this.objects = [];
 	},
 	draw:function(arg){ //TODO:Deprecated, using CreateJS now
 		for (var i = 0; i < this.objects.length ; i ++){
