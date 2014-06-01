@@ -3,10 +3,10 @@ Fleet = Node.extend({
 	owner:null, /*Player*/
 	transform:null,
 	engine:null, 
+	rotationEngine: null,
 	subSystems:null,
 	baseSpeed:1, //depends on engines engine susbsystem lvl
 	selected:false, //TODO when micromanagement is working
-	direction:null,
 	init:function(){
 		this.subSystems = new SubsystemHandler();
 		this.addChild(this.subSystems);
@@ -14,12 +14,16 @@ Fleet = Node.extend({
 		this.engine = new GotoPosition(this);
 		this.addChild(this.engine)
 
+		this.rotationEngine = new RotateTowards(this);
+		this.addChild(this.rotationEngine)
+
 		this.direction = new Vector(0,1);
 	},
 	FixedUpdate:function(){
 		/*this.transform.x+= 1;
 		this.transform.y+= 1;  */
-		this.engine.speed = this.subSystems.getRelativeEnergyLevel("engine")
+		this.engine.speed = this.subSystems.getRelativeEnergyLevel("engine");
+		//this.transform.rotation++;
 	},
 	Start:function(scene){
 		this.transform = new createjs.Shape(); 
@@ -29,9 +33,20 @@ Fleet = Node.extend({
 		
 
 
-		this.transform.graphics.beginFill("#000000").drawCircle(0,0,50);
+		this.transform.graphics.beginFill("#000000");
+		//this.transform.graphics.drawCircle(0,0,50);
+
+
+		//this.transform.graphics.beginStroke("black"); 
+
+		var fleetSize = 50; 
+		this.transform.graphics
+			.moveTo(-fleetSize, -fleetSize)
+			.lineTo(fleetSize, 0)
+			.lineTo(-fleetSize, fleetSize)
+			.lineTo(-fleetSize, -fleetSize);
 		 
-	 
+	 	
 	 
 
 		//createjs.Tween.get(ball,{loop:true}).to({x:450}, 3000).to({x:50},3000);
