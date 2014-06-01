@@ -4,7 +4,7 @@ GotoPosition = Node.extend({
 	speed:1,
 	objects:[], 
 	init:function(parent){
-		this.parent  = parent;
+		//this.parent  = parent;
 	},
 	Event:function(e){ 
 		if (e.name == "stagemousedown"){
