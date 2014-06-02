@@ -1,15 +1,25 @@
 Player = Node.extend({
 	selectedFleets:null,
 	init:function(){
+		this._super(); 
 		this.selectedFleets = [];
-		this._super();
+		
 	},
-	addFleet:function(fleet){
+	selectFleet:function(fleet){
 		this.selectedFleets.push(fleet);
 	},
 	moveFleets:function(pos){
 		for (var i = 0 ; i < this.selectedFleets.length; i++){
 			this.selectedFleets[i].moveTo(pos);
 		}
+	},
+	//factory method for any new object, usually used for Fleets:
+	construct:function(type){
+		var newObj = new type();
+		this.addChild(newObj);
+		console.log("construct and stuff");
+		console.log(this.objects);
+		return newObj;
 	}
+
 });

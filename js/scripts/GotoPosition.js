@@ -5,10 +5,6 @@ GotoPosition = Node.extend({
 	speed:0,
 	acceleration:1, //this is just a factor, real acceleration is acceleration*0.1 
 	currentAccel:1,
-	objects:[],
-	init:function(parent){
-		//this.parent  = parent;
-	},
 	moveTo:function(pos){
 		this.active = true;
 		this.goal = pos;

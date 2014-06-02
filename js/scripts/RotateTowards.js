@@ -9,7 +9,6 @@ RotateTowards = Node.extend({
 	goal:null,
 	active:false,
 	speed:1,
-	objects:[],
 	lookAt:function(pos){
 		this.active = true;
 		this.goal = pos.subtract( new Vector(this.parent.transform.x,this.parent.transform.y))

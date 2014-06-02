@@ -12,10 +12,10 @@ Fleet = Node.extend({
 		this.subSystems = new SubsystemHandler();
 		this.addChild(this.subSystems);
 
-		this.engine = new GotoPosition(this);
+		this.engine = new GotoPosition();
 		this.addChild(this.engine)
 
-		this.rotationEngine = new RotateTowards(this);
+		this.rotationEngine = new RotateTowards();
 		this.addChild(this.rotationEngine)
 
 		this.direction = new Vector(0,1);
@@ -37,6 +37,8 @@ Fleet = Node.extend({
 		this.rotationEngine.lookAt(pos); 
 	},
 	Start:function(scene){
+		this._super(scene);
+		console.log("Start")
 		this.transform = new createjs.Shape(); 
 		this.transform.addEventListener("click",this.handleClick);
 		this.transform.x = 50;

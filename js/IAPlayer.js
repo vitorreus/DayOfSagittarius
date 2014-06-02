@@ -1,6 +1,7 @@
 IAPlayer  = Player.extend({
 
-	Start:function(){ 
+	Start:function(scene){ 
+		this._super(scene);
 		setTimeout(function(obj){return function (){obj.randomMove()}}(this),Math.random()*500+500);
 	},
 	randomMove:function(){

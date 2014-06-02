@@ -1,6 +1,7 @@
 var Node = Class.extend({
 	objects:null, 
 	parent:null,
+	started:false,
 	addChild:function(obj){
 		obj.parent = this;
 		this.objects.push(obj);
@@ -23,6 +24,8 @@ var Node = Class.extend({
 		}
 	},
 	Start:function(scene){
+		if (this.started) return;
+		this.started = true;
 		for (var i = 0; i < this.objects.length ; i ++){
 			if (this.objects[i] != this && this.objects[i].Start){
 				this.objects[i].Start(scene);
@@ -30,10 +33,10 @@ var Node = Class.extend({
 		}
 	},
 	//standard function to propagate anything to all objects:
-	Event:function(scene){
+	Event:function(e){
 		for (var i = 0; i < this.objects.length ; i ++){
 			if (this.objects[i] != this && this.objects[i].Event){
-				this.objects[i].Event(scene);
+				this.objects[i].Event(e);
 			}
 		}
 	}
