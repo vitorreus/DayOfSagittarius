@@ -10,11 +10,12 @@ function handleComplete(){
 	player.selectFleet(fleet1); 
 
 
-	var app  = new Node();  
+	  app  = new Scene();  
+
 	app.addChild(enemy); 
 	app.addChild(player);
 	
-	app.Start();
+	app.Start(stage);
 
 	fleet1.transform.x = 300;
 	fleet1.transform.y = 300;

@@ -17,8 +17,6 @@ Player = Node.extend({
 	construct:function(type){
 		var newObj = new type();
 		this.addChild(newObj);
-		console.log("construct and stuff");
-		console.log(this.objects);
 		return newObj;
 	}
 
