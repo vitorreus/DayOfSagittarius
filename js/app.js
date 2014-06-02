@@ -6,9 +6,14 @@ var stage;
 function handleComplete(){
 	app  = new Node(); 
 
-	app.addChild(new Fleet());
+	var enemyFleet = new Fleet();
 
-	
+	app.addChild(enemyFleet);
+	var enemy = new IAPlayer();
+	app.addChild(enemy);
+
+	enemy.addFleet(enemyFleet)
+
 	fleet1 = new Fleet(); 
 	//fleet1.add(new Fleet());
 	var player = new HumanPlayer();

@@ -16,33 +16,37 @@ SubsystemHandler = Class.extend({
 	maxEnergy:100,
 	reactorPower:.1, /*per fixeUpdate*/ 
 	//TODO:Change this o an hash  of Subsystem Objects
-	subSystems:{
-		// weapons wont change lvl, they will just not fire.
-		// also, maybe the first one could be engines, because the player also has some degree of controll over it
-		//therefore we define the priorities:
-		//first engine goes automatticaly down, then shields. 
-		//This will be good when the ghost-priorities comes in practive, because then we dont need to mess with the "active/inactive" state of the GotoPosition script
-		
+	subSystems:null,
+	init:function(){
+		//this._super();
+		this.subSystems = {
+			// weapons wont change lvl, they will just not fire.
+			// also, maybe the first one could be engines, because the player also has some degree of controll over it
+			//therefore we define the priorities:
+			//first engine goes automatticaly down, then shields. 
+			//This will be good when the ghost-priorities comes in practive, because then we dont need to mess with the "active/inactive" state of the GotoPosition script
+			
 
-		maxLevel:4,
-		energyLevel:{ /*up to 4*/
-			shield:2,
-			weapon:2,
-			engine:2
-		},
+			maxLevel:4,
+			energyLevel:{ /*up to 4*/
+				shield:2,
+				weapon:2,
+				engine:2
+			},
 
-		//the "ghost" stuff
-		energyBacklog:{ /*up to 4*/
-			shield:0,
-			weapon:0,
-			engine:0
-		},
+			//the "ghost" stuff
+			energyBacklog:{ /*up to 4*/
+				shield:0,
+				weapon:0,
+				engine:0
+			},
 
-		energyUsageByLevel:{ /*up to 4*/
-			shield:.03, //0.03 is good, because power regenerates on lvl 3, but very slowly
-			weapon:20, //TODO:this is instant.. 
-			engine:.03 //TODO:this is only used when moving.. 
-		},
+			energyUsageByLevel:{ /*up to 4*/
+				shield:.03, //0.03 is good, because power regenerates on lvl 3, but very slowly
+				weapon:20, //TODO:this is instant.. 
+				engine:.03 //TODO:this is only used when moving.. 
+			},
+		}
 	},
 	add:function(name,system){
 		subSystems[name] = system;
