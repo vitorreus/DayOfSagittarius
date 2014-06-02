@@ -9,7 +9,7 @@ Fleet = Node.extend({
 	selected:false, //TODO when micromanagement is working
 	attackLine:null,
 	weaponsRange:200,
-	weaponAngle:5,
+	weaponAngle:10,//in deg
 	init:function(){
 		this._super();
 		this.subSystems = new SubsystemHandler();
@@ -37,7 +37,7 @@ Fleet = Node.extend({
  		//find nearest enemy ship and atack it
 		var items = this.SendMessageUpwards("quadtreeRetrieve",[this.transform]);
 		this.attackLine.graphics.clear();
-		this.attackLine.graphics.beginStroke("#F00");
+		
 		//TODO: filter only enemies
 		for (var i = 0; i < items.length ; i++){
 			otherFleet = items[i].owner
@@ -65,10 +65,13 @@ Fleet = Node.extend({
 	},
 	attack:function(otherFleet){
 		this.lookAt(otherFleet.getPosition());
-		//if ()
-		this.attackLine.graphics
-				.moveTo(this.transform.x,this.transform.y)
-				.lineTo(otherFleet.transform.x, otherFleet.transform.y )
+		if (this.getDirection().angleTo(otherFleet.getPosition().subtract(this.getPosition())) 
+			< degToRad(this.weaponAngle)){
+			this.attackLine.graphics.beginStroke("#F00");
+			this.attackLine.graphics
+					.moveTo(this.transform.x+10,this.transform.y+10)//+10 just to diferentiate attacking from attackers
+					.lineTo(otherFleet.transform.x, otherFleet.transform.y )
+		}
 	},
 	moveTo:function(pos){
 		console.log(pos);
