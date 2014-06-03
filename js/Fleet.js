@@ -40,6 +40,7 @@ Fleet = Transform.extend({
  		if (this.engine.active && !this.attacking){ 
  			this.lookAt(this.engine.goal)
  		} 
+ 		//TODO: Change on colisoinLeave
  		this.attacking = false;
 	},
 	inRange:function(otherFleet){
@@ -118,6 +119,10 @@ Fleet = Transform.extend({
 			 
 		}
 
+	},
+	OnCollisionStay:function(collisionInfo ){
+		//TODO: filter only enemies
+		this.attack(collisionInfo.gameObject);
 	}
 
 })
