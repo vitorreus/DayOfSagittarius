@@ -1,6 +1,6 @@
 CircleCollider  = Collider.extend({
 	radius:0,
-	transform:null,//TODO: make Collider extend Transform?
+	transform:null,//TODO: make Collider extend Transform? That way we dont need to pass the owner position..
 	init:function(radius,flags){
 		//TODO:flags are used for collision layers
 		this._super(flags);
@@ -31,6 +31,13 @@ CircleCollider  = Collider.extend({
 								.subtract(otherPosition)
 								.length();
 			return  (distance <= this.radius + otherCollider.radius );
+		}
+
+		if (otherCollider&& otherCollider instanceof PointCollider){
+			var distance = this.parent.getPosition()
+								.subtract(otherPosition)
+								.length();
+			return  (distance <= this.radius );
 		}
 
 	}

@@ -4,7 +4,6 @@ var Node = Class.extend({
 	components:null,//stores a hash of childs with key beying the type of the child. To be used with GetComponent  
 	started:false,
 	scene:null,
-	_colliders:null,
 	addChild:function(obj){
 		obj.parent = this;
 		this.objects.push(obj);

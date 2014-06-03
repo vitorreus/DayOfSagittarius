@@ -1,10 +1,7 @@
 Scene = Node.extend({
 
 	tree:null,//quadtree for collision detection 	
-	/*init:function(){
-		
-		
-	},*/
+	
 	Start:function(stage){
 		var isPointQuad = true;
 		this.tree = new QuadTree(

@@ -1,13 +1,12 @@
 Fleet = Transform.extend({
 	ships:15000,
-	owner:null, /*Player*/
 	engine:null, 
 	rotationEngine: null,
 	subSystems:null,
 	baseSpeed:1, //depends on engines engine susbsystem lvl
 	selected:false, //TODO when micromanagement is working
 	attackLine:null,
-	weaponsRange:100,
+	weaponsRange:200,
 	weaponAngle:10,//in deg
 	attacking:false,
 	init:function(){
@@ -25,7 +24,7 @@ Fleet = Transform.extend({
 
 		this.addChild(new Rigidbody());
 		this.addChild(new CircleCollider(this.weaponsRange)); //the weapon range
-		//this.addChild(new PointCollider()); //Its position to the other fleets
+		this.addChild(new PointCollider()); //Its position to the other fleets
 
 
 		
@@ -81,9 +80,7 @@ Fleet = Transform.extend({
 			.moveTo(-fleetSize, -fleetSize)
 			.lineTo(fleetSize, 0)
 			.lineTo(-fleetSize, fleetSize)
-			.lineTo(-fleetSize, -fleetSize);  
-
-		stage.addChild(this.transform);
+			.lineTo(-fleetSize, -fleetSize);
 
 		//stage.removeChild(ball);
 
@@ -110,7 +107,7 @@ Fleet = Transform.extend({
 	},
 	OnCollisionStay:function(collisionInfo ){
 		//TODO: filter only enemies
-		if (collisionInfo.collider instanceof CircleCollider){
+		if (collisionInfo.collider instanceof PointCollider){
 			this.attack(collisionInfo.gameObject);
 		}
 	}

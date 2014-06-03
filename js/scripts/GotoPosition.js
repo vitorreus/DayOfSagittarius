@@ -4,7 +4,6 @@ GotoPosition = Node.extend({
 	maxSpeed:1,
 	speed:0,
 	acceleration:1, //this is just a factor, real acceleration is acceleration*0.1 
-	currentAccel:1,
 	moveTo:function(pos){
 		this.active = true;
 		this.goal = pos;
@@ -14,12 +13,11 @@ GotoPosition = Node.extend({
 
 			var parentPosition = new Vector(this.parent.transform.x,this.parent.transform.y);
 
-			var direction = parentPosition
-				.subtract(this.goal).unit();
-
 			//check arrival
 			var distance = parentPosition
 				.subtract(this.goal);
+
+			var direction = distance.unit();
 
 			var acceleration = this.acceleration*0.1;
 
@@ -37,11 +35,8 @@ GotoPosition = Node.extend({
  			//figure out if we should break or accelerate
 			if (distanceTraveledWhileStopping >= distance.length()){ 
 				this.speed -= acceleration;
-				this.currentAccel = -acceleration;
 			} else{
-
 				this.speed += acceleration;
-				this.currentAccel = +acceleration;
 			}
 			
 			if (this.speed > this.maxSpeed){

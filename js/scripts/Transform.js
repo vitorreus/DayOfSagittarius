@@ -11,6 +11,10 @@ Transform = Node.extend({
 	getDirection:function(){
 		var deg = this.transform.rotation;
 		return  new Vector(Math.cos(degToRad(deg)),Math.sin(degToRad(deg)));
+	},
+	Start:function(stage){
+		this._super(stage);
+		stage.addChild(this.transform);
 	}
 
 })
