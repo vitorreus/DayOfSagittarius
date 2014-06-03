@@ -1,4 +1,5 @@
 var stage;
+var debugPhysics = true;
 function handleComplete(){
 	
 	var enemy = new IAPlayer();

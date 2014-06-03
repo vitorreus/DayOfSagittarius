@@ -7,7 +7,7 @@ Fleet = Transform.extend({
 	baseSpeed:1, //depends on engines engine susbsystem lvl
 	selected:false, //TODO when micromanagement is working
 	attackLine:null,
-	weaponsRange:200,
+	weaponsRange:100,
 	weaponAngle:10,//in deg
 	attacking:false,
 	init:function(){
