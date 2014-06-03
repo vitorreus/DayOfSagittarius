@@ -45,6 +45,7 @@ var Node = Class.extend({
 			}
 		}
 	},
+	//TODO: optimize this, do not use strings
 	SendMessageUpwards:function(methodName,value){
 		var retValue = null;
 		if (this.parent){

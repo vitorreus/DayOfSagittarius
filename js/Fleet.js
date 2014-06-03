@@ -24,7 +24,8 @@ Fleet = Transform.extend({
 		this.direction = new Vector(0,1);
 
 		this.addChild(new Rigidbody());
-		this.addChild(new CircleCollider(this.weaponsRange));
+		this.addChild(new CircleCollider(this.weaponsRange)); //the weapon range
+		//this.addChild(new PointCollider()); //Its position to the other fleets
 
 
 		
@@ -42,19 +43,6 @@ Fleet = Transform.extend({
  		} 
  		//TODO: Change on colisoinLeave
  		this.attacking = false;
-	},
-	inRange:function(otherFleet){
-		var distance = this.getPosition()
-						.subtract(otherFleet.getPosition())
-						.length();
-		return (distance < this.weaponsRange);
-	},
-	getPosition:function(){
-		return new Vector(this.transform.x,this.transform.y);
-	},
-	getDirection:function(){
-		var deg = this.transform.rotation;
-		return  new Vector(Math.cos(degToRad(deg)),Math.sin(degToRad(deg)));
 	},
 	attack:function(otherFleet){
 		this.attacking = true;
@@ -122,7 +110,9 @@ Fleet = Transform.extend({
 	},
 	OnCollisionStay:function(collisionInfo ){
 		//TODO: filter only enemies
-		this.attack(collisionInfo.gameObject);
+		if (collisionInfo.collider instanceof CircleCollider){
+			this.attack(collisionInfo.gameObject);
+		}
 	}
 
 })

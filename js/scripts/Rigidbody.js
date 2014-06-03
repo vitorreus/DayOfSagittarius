@@ -31,19 +31,11 @@ Rigidbody = Node.extend({
 
 				var thisCircle = this.parent.GetComponent(CircleCollider);
 				var otherCircle = otherFleet.GetComponent(CircleCollider)
-				if (thisCircle &&  otherCircle &&this.parent.getPosition &&otherFleet.getPosition){
-						var distance = this.parent.getPosition()
-							.subtract(otherFleet.getPosition())
-							.length();
-						if (distance <= thisCircle.radius + otherCircle.radius ){
-							this.SendMessageUpwards("OnCollisionStay",
+
+				if (thisCircle.CollidesWith(otherCircle,otherFleet.getPosition())){
+					this.SendMessageUpwards("OnCollisionStay",
 								[{collider:otherCircle, gameObject:otherFleet}]);
-
-						}
-
-
 				}
-			
 			}
 		}
 	}

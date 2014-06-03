@@ -20,5 +20,17 @@ CircleCollider  = Collider.extend({
 		this.transform.graphics.beginStroke("#000000");
 		this.transform.graphics.drawCircle(0, 0, this.radius);
 		scene.addChild(this.transform);
+	},
+	CollidesWith:function(otherCollider,otherPosition){
+		//sanity check:
+		if (!(this.parent && this.parent.getPosition && otherPosition )) return false;
+
+		if (otherCollider&& otherCollider instanceof CircleCollider){
+			var distance = this.parent.getPosition()
+								.subtract(otherPosition)
+								.length();
+			return  (distance <= this.radius + otherCollider.radius );
+		}
+
 	}
 })

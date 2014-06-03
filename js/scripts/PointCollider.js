@@ -1,0 +1,2 @@
+PointCollider  = Collider.extend({
+});

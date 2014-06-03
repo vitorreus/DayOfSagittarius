@@ -3,3 +3,4 @@
 * Attack
 * Draw number of ships
 * Remove Drawing code from fixedUpdate
+* Fix fleets not looking at engine goal after attacking
