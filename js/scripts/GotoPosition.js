@@ -24,11 +24,15 @@ GotoPosition = Node.extend({
 			var acceleration = this.acceleration*0.1;
 
 			//figure out the time to stop
-			var timeToStop = this.speed/acceleration;	
+			//var timeToStop = this.speed/acceleration;	
 			//figure out the traveled distance while deaceclerating:
 			//using uniform acceleration equation of motion S=So+Vot+at^2/2
-			var distanceTraveledWhileStopping = this.speed *timeToStop 
-								+ acceleration*Math.pow(timeToStop,2)/2
+			//var distanceTraveledWhileStopping = this.speed *timeToStop 
+			//					+ acceleration*Math.pow(timeToStop,2)/2
+			//plugging timeToStop:
+			//d = s*s/a + a*s^2/a^2 = (s^2 + as^2/a)/a = 2s^2/a
+			//simplifying the abofe formula gives:
+			var distanceTraveledWhileStopping = 2*Math.pow(this.speed,2)/acceleration;
  
  			//figure out if we should break or accelerate
 			if (distanceTraveledWhileStopping >= distance.length()){ 

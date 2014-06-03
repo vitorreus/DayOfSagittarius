@@ -64,14 +64,18 @@ Fleet = Node.extend({
 		return  new Vector(Math.cos(degToRad(deg)),Math.sin(degToRad(deg)));
 	},
 	attack:function(otherFleet){
-		this.lookAt(otherFleet.getPosition());
-		if (this.getDirection().angleTo(otherFleet.getPosition().subtract(this.getPosition())) 
-			< degToRad(this.weaponAngle)){
+
+		var angle = radToDeg(this.getDirection().angleTo(otherFleet.getPosition().subtract(this.getPosition())));
+		if (angle > this.weaponAngle/2){
+			this.lookAt(otherFleet.getPosition());
+		}
+		
+		if (angle <= this.weaponAngle){
 			this.attackLine.graphics.beginStroke("#F00");
 			this.attackLine.graphics
 					.moveTo(this.transform.x+10,this.transform.y+10)//+10 just to diferentiate attacking from attackers
 					.lineTo(otherFleet.transform.x, otherFleet.transform.y )
-		}
+		} 
 	},
 	moveTo:function(pos){
 		console.log(pos);
