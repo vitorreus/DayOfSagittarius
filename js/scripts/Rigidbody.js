@@ -26,15 +26,18 @@ Rigidbody = Node.extend({
 		
 		
 		for (var i = 0; i < items.length ; i++){
-			otherFleet = items[i].owner
-			if (otherFleet != this){  
-
-				var thisCircle = this.parent.GetComponent(CircleCollider);
-				var otherCircle = otherFleet.GetComponent(CircleCollider)
-
-				if (thisCircle.CollidesWith(otherCircle,otherFleet.getPosition())){
-					this.SendMessageUpwards("OnCollisionStay",
-								[{collider:otherCircle, gameObject:otherFleet}]);
+			otherObject = items[i].owner
+			if (otherObject != this){  
+				//checks all colliders:
+				for (var my = 0;my < this.parent._colliders.length;my++){
+					var thisCollider = this.parent._colliders[my];
+					for (var theirs = 0;theirs < otherObject._colliders.length;theirs++){
+						var otherCollider = otherObject._colliders[theirs];
+						if (thisCollider.CollidesWith(otherCollider,otherObject.getPosition())){
+							this.SendMessageUpwards("OnCollisionStay",
+										[{collider:otherCollider, gameObject:otherObject}]);
+						}
+					}
 				}
 			}
 		}

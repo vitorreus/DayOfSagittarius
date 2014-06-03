@@ -22,6 +22,7 @@ CircleCollider  = Collider.extend({
 		scene.addChild(this.transform);
 	},
 	CollidesWith:function(otherCollider,otherPosition){
+		this._super(otherCollider,otherPosition);
 		//sanity check:
 		if (!(this.parent && this.parent.getPosition && otherPosition )) return false;
 
