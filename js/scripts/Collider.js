@@ -1,0 +1,1 @@
+Collider = Node.extend({})

@@ -1,14 +1,17 @@
 var Node = Class.extend({
 	objects:null, 
 	parent:null,
+	components:null,//stores a hash of childs with key beying the type of the child. To be used with GetComponent  
 	started:false,
 	scene:null,
 	addChild:function(obj){
 		obj.parent = this;
 		this.objects.push(obj);
+		this.components[obj.constructor] = obj;
 	},
 	init:function(){
 		this.objects = [];
+		this.components ={};
 	},
 	draw:function(arg){ //TODO:Deprecated, using CreateJS now
 		for (var i = 0; i < this.objects.length ; i ++){
@@ -51,6 +54,9 @@ var Node = Class.extend({
 			}
 		}
 		return retValue;
+	},
+	GetComponent:function(type){
+		return this.components[type];
 	}
 
 })

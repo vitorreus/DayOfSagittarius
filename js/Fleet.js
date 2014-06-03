@@ -1,7 +1,6 @@
-Fleet = Node.extend({
+Fleet = Transform.extend({
 	ships:15000,
 	owner:null, /*Player*/
-	transform:null,
 	engine:null, 
 	rotationEngine: null,
 	subSystems:null,
@@ -10,6 +9,7 @@ Fleet = Node.extend({
 	attackLine:null,
 	weaponsRange:200,
 	weaponAngle:10,//in deg
+	attacking:false,
 	init:function(){
 		this._super();
 		this.subSystems = new SubsystemHandler();
@@ -22,33 +22,25 @@ Fleet = Node.extend({
 		this.addChild(this.rotationEngine)
 
 		this.direction = new Vector(0,1);
+
+		this.addChild(new Rigidbody());
+		this.addChild(new CircleCollider(this.weaponsRange));
+
+
+		
 	},
 	FixedUpdate:function(){
+		this.attackLine.graphics.clear();
 		this._super();
 		/*this.transform.x+= 1;
 		this.transform.y+= 1;  */
 		this.engine.maxSpeed = this.subSystems.getRelativeEnergyLevel("engine");
 		this.engine.acceleration = this.subSystems.getRelativeEnergyLevel("engine");  
 		this.rotationEngine.speed = this.subSystems.getRelativeEnergyLevel("engine"); 
- 		if (this.engine.active){ 
+ 		if (this.engine.active && !this.attacking){ 
  			this.lookAt(this.engine.goal)
- 		}
-
- 		//find nearest enemy ship and atack it
-		var items = this.SendMessageUpwards("quadtreeRetrieve",[this.transform]);
-		this.attackLine.graphics.clear();
-		
-		//TODO: filter only enemies
-		for (var i = 0; i < items.length ; i++){
-			otherFleet = items[i].owner
-			if (otherFleet != this){  
-				if (this.inRange(otherFleet)){
-					this.attack(otherFleet);
-					continue; //attack just one
-				}
-				
-			}
-		}
+ 		} 
+ 		this.attacking = false;
 	},
 	inRange:function(otherFleet){
 		var distance = this.getPosition()
@@ -64,7 +56,7 @@ Fleet = Node.extend({
 		return  new Vector(Math.cos(degToRad(deg)),Math.sin(degToRad(deg)));
 	},
 	attack:function(otherFleet){
-
+		this.attacking = true;
 		var angle = radToDeg(this.getDirection().angleTo(otherFleet.getPosition().subtract(this.getPosition())));
 		if (angle > this.weaponAngle/2){
 			this.lookAt(otherFleet.getPosition());
@@ -87,7 +79,6 @@ Fleet = Node.extend({
 	},
 	Start:function(scene){
 		this._super(scene);
-		this.transform = new createjs.Shape(); 
 		this.transform.addEventListener("click",this.handleClick);
 		this.transform.x = 50;
 		this.transform.y = 50;
@@ -105,7 +96,6 @@ Fleet = Node.extend({
 
 		stage.addChild(this.transform);
 
-		this.SendMessageUpwards("quadtreeInsert",[this.transform]);
 		//stage.removeChild(ball);
 
 		this.attackLine = new createjs.Shape(); 
