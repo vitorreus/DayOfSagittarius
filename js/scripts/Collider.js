@@ -12,5 +12,10 @@ Collider = Node.extend({
 	},
 	CollidesWith:function(otherCollider,otherPosition){
 		return false;
+	},
+	Destroy:function(){
+		this._super();
+		var me = this.parent._colliders.indexOf(this);
+		this.parent._colliders.splice(me,1);
 	}
 })

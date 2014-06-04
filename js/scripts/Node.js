@@ -29,7 +29,6 @@ var Node = Class.extend({
 		for (var i = this.objects.length-1; i >= 0; i--){
 			if (this.objects[i] != this && this.objects[i].Destroy){
 	    		this.objects[i].Destroy();
-	    		var wololo;
 	    	}
 	    }
 		if (this.parent){
