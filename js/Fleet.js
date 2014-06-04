@@ -56,7 +56,7 @@ Fleet = Transform.extend({
  		if (this.ships <= 0) this.die();
 	},
 	die:function(){
-
+		this.Destroy();
 	},
 	attackNearest:function(otherFleets){
 		var nearest = null;
@@ -136,7 +136,7 @@ Fleet = Transform.extend({
 	}, 
 	Destroy:function(){
 		this._super();
-		//this.scene.removeChild(this.tran);
+		this.scene.removeChild(this.transform,this.fleetNumberText,this.attackLine);
 	},
 	handleClick:function (event){
 		//this should be someting with input

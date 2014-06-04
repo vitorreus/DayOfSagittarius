@@ -22,11 +22,24 @@ var Node = Class.extend({
 	RemoveChild:function(obj){
 		var index =  this.objects.indexOf(obj);
 		this.objects.splice(index,1);
+		return true;
 	},
 	Destroy:function(){
-		if (this.parent){
-	    	this.parent.RemoveChild(this)
+		//going from back to forward because we are removing elements
+		for (var i = this.objects.length-1; i >= 0; i--){
+			if (this.objects[i] != this && this.objects[i].Destroy){
+	    		this.objects[i].Destroy();
+	    		var wololo;
+	    	}
 	    }
+		if (this.parent){
+	    	this.parent.RemoveChild(this);
+	    	delete components;
+	    	delete objects;
+	    	return true;
+	    }
+	    return false;
+
 	},
 	draw:function(arg){ //TODO:Deprecated, using CreateJS now
 		for (var i = 0; i < this.objects.length ; i ++){

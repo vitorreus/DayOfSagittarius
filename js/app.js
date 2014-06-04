@@ -8,7 +8,7 @@ function handleComplete(){
  
 	var player = new HumanPlayer("#00F");
 	var fleet1 = player.construct(Fleet);
-	
+	fleet1.ships = 100;
 	player.selectFleet(fleet1); 
 
 

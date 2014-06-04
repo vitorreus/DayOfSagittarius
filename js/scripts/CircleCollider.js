@@ -40,5 +40,12 @@ CircleCollider  = Collider.extend({
 			return  (distance <= this.radius );
 		}
 
+	},
+	Destroy:function(){
+		this._super();
+		if (this.transform){
+			this.transform.graphics.clear();
+			this.scene.removeChild(this.transform);
+		}
 	}
 })
