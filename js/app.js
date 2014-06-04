@@ -2,10 +2,11 @@ var stage;
 var debugPhysics = true;
 function handleComplete(){
 	
-	var enemy = new IAPlayer();
+	var enemy = new IAPlayer("#0FF");
 	enemy.selectFleet(enemy.construct(Fleet) );
+	enemy.construct(Fleet) ;
  
-	var player = new HumanPlayer();
+	var player = new HumanPlayer("#00F");
 	var fleet1 = player.construct(Fleet);
 	
 	player.selectFleet(fleet1); 

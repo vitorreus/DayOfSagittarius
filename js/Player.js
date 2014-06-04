@@ -1,12 +1,19 @@
 Player = Node.extend({
 	selectedFleets:null,
-	init:function(){
+	color:"#000",
+	init:function(color){
 		this._super(); 
 		this.selectedFleets = [];
+		if (color){
+			this.color = color;
+		}
 		
 	},
 	selectFleet:function(fleet){
 		this.selectedFleets.push(fleet);
+	},
+	selectNone:function(){
+		this.selectedFleets = [];
 	},
 	moveFleets:function(pos){
 		for (var i = 0 ; i < this.selectedFleets.length; i++){

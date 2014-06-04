@@ -13,6 +13,21 @@ var Node = Class.extend({
 		this.objects = [];
 		this.components ={};
 	},
+	childCount:function(){
+		return this.objects.length;
+	},
+	GetChild:function(i){
+		return this.objects[i];
+	},
+	RemoveChild:function(obj){
+		var index =  this.objects.indexOf(obj);
+		this.objects.splice(index,1);
+	},
+	Destroy:function(){
+		if (this.parent){
+	    	this.parent.RemoveChild(this)
+	    }
+	},
 	draw:function(arg){ //TODO:Deprecated, using CreateJS now
 		for (var i = 0; i < this.objects.length ; i ++){
 			if (this.objects[i] != this  ){

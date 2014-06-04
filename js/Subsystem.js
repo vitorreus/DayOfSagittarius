@@ -42,9 +42,9 @@ SubsystemHandler = Class.extend({
 			},
 
 			energyUsageByLevel:{ /*up to 4*/
-				shield:.03, //0.03 is good, because power regenerates on lvl 3, but very slowly
-				weapon:20, //TODO:this is instant.. 
-				engine:.03 //TODO:this is only used when moving.. 
+				shield:.1/6, //.1/6 because it remais stable at 2/2/2
+				weapon:.1/6, //TODO:this is instant.. 
+				engine:.1/6 //TODO:this is only used when moving.. 
 			},
 		}
 	},
@@ -65,6 +65,7 @@ SubsystemHandler = Class.extend({
 			this.setEnergyBacklog(subSystem, 0);
 			//this will provide the "best try" for the energy, decaying 1 lvl until zero, trying to suply the subsystem
 			if (this.subSystems.energyLevel[subSystem] == 0) continue;
+			//if (subSystem == "weapon" && this.nextEnergyLevel(subSystem) < 0) continue;
 			while(this.nextEnergyLevel(subSystem) < 0){
 				//TODO:save the user-defined level, so we can return to it once power is back
 				//also we wont change the lvl of the weapon, we just wont fire 
@@ -96,7 +97,7 @@ SubsystemHandler = Class.extend({
 				return this.parent.engine.active || this.parent.rotationEngine.active;
 				break;
 			case "weapon": 
-				return false; //should look more deeply into this
+				return this.parent.isAttacking; //should look more deeply into this
 				break;
 			default:return true;
 		}

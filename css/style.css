@@ -14,11 +14,13 @@
 	width:20px;  
 	position: relative;
 	margin-right: 5px;
+	border:1px solid black;
 }
 
 #energy div div div { 
 	background:cyan;
-	border:1px solid black;
+	border:none;
+	border-top: 1px solid black;
 	 position: absolute; bottom: 0; left: 0; 
 }
 
