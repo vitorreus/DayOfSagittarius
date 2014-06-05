@@ -110,7 +110,7 @@ Fleet = Transform.extend({
 		this.transform.addEventListener("click",this.handleClick);
 		this.transform.x = 50;
 		this.transform.y = 50;
-		this.transform.z = 0;
+		this.transform.z = 10;
 		this.transform.owner = this;
 
 		this.transform.graphics.beginFill(this.parent.color);
@@ -126,7 +126,7 @@ Fleet = Transform.extend({
 		//stage.removeChild(ball);
 
 		this.attackLine = new createjs.Shape(); 
-		this.attackLine.z =1 ;
+		this.attackLine.z =20 ;
 		scene.addChild(this.attackLine);
 
 

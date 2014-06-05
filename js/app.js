@@ -1,5 +1,6 @@
 
-var debugPhysics = true;
+//TODO: put this var insede collider or other physics-related class
+var debugPhysics = false;
 function handleComplete(){
 	var stage;
 	stage = new createjs.Stage("myCanvas");
