@@ -12,6 +12,7 @@ CircleCollider  = Collider.extend({
 		var pos = this.parent.getPosition();
 		this.transform.x = pos.x;
 		this.transform.y = pos.y;
+
 	},
 	Start:function(scene){
 		this._super(scene);
@@ -19,6 +20,7 @@ CircleCollider  = Collider.extend({
 		this.transform = new createjs.Shape();
 		this.transform.graphics.beginStroke("#000000");
 		this.transform.graphics.drawCircle(0, 0, this.radius);
+		this.transform.z =  -1;
 		scene.addChild(this.transform);
 	},
 	CollidesWith:function(otherCollider,otherPosition){

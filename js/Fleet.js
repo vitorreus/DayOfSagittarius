@@ -110,6 +110,7 @@ Fleet = Transform.extend({
 		this.transform.addEventListener("click",this.handleClick);
 		this.transform.x = 50;
 		this.transform.y = 50;
+		this.transform.z = 0;
 		this.transform.owner = this;
 
 		this.transform.graphics.beginFill(this.parent.color);
@@ -125,13 +126,14 @@ Fleet = Transform.extend({
 		//stage.removeChild(ball);
 
 		this.attackLine = new createjs.Shape(); 
-		stage.addChild(this.attackLine);
+		this.attackLine.z =1 ;
+		scene.addChild(this.attackLine);
 
 
 		//this.fleetNumberText = new createjs.Text("Hello World", "bold 86px Arial", "#ff7700");
 		this.fleetNumberText = new createjs.Text(this.ships,"14px Arial");
 		this.fleetNumberText.textAlign = "center"
-		stage.addChild(this.fleetNumberText);
+		scene.addChild(this.fleetNumberText);
 
 	}, 
 	Destroy:function(){
@@ -145,7 +147,7 @@ Fleet = Transform.extend({
 		bmp.x = Math.random()*500;
 		bmp.y = Math.random()*500;
 
-		stage.addChild(bmp);
+		scene.addChild(bmp);
 	},
 	Event:function(e){ 
 		if (e.name == "stagemousedown"){

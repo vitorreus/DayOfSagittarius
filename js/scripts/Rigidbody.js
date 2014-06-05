@@ -26,7 +26,7 @@ Rigidbody = Node.extend({
 		
 		
 		for (var i = 0; i < items.length ; i++){
-			otherObject = items[i].owner
+			var otherObject = items[i].owner
 			if (otherObject != this){  
 				//checks all colliders:
 				for (var my = 0;my < this.parent._colliders.length;my++){

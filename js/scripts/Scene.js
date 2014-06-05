@@ -16,6 +16,7 @@ Scene = Node.extend({
 	},
 	quadtreeInsert:function(transform){
 		this.tree.insert(transform);
+		
 	},
 	quadtreeRetrieve:function(pos){ 
 		return  this.tree.retrieve(pos);

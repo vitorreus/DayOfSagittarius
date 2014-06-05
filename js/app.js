@@ -1,7 +1,8 @@
-var stage;
+
 var debugPhysics = true;
 function handleComplete(){
-	
+	var stage;
+	stage = new createjs.Stage("myCanvas");
 	var enemy = new IAPlayer("#0FF");
 	enemy.selectFleet(enemy.construct(Fleet) );
 	enemy.construct(Fleet) ;
@@ -12,10 +13,13 @@ function handleComplete(){
 	player.selectFleet(fleet1); 
 
 
-	  app  = new Scene();  
+	var app  = new Scene();
 
-	app.addChild(enemy); 
-	app.addChild(player);
+	var map = new Space();
+	map.addChild(enemy);
+	map.addChild(player);
+
+	app.addChild(map);
 	
 	app.Start(stage);
 
@@ -25,6 +29,11 @@ function handleComplete(){
 
 	setInterval( function(a){return function (){a.draw()}}(app),1000 /*60fps*/ ); //try to do dynamic? Or will it be automatically slowed down and fixedupdate will have no problem?
 	setInterval( function(a){return function (){a.FixedUpdate()}}(app),1000/60 /*60fps*/ );
+	
+
+	function tick(event){
+		stage.update();
+	}
 
 	createjs.Ticker.addEventListener("tick",tick);
 	//setInterval(tick,1000/60);
@@ -37,7 +46,7 @@ function handleComplete(){
 }
 
 function init(){
-	stage = new createjs.Stage("myCanvas");
+	
 
 	queue = new createjs.LoadQueue(false); //pass false to use locally
 	queue.addEventListener("complete",handleComplete)
@@ -45,7 +54,4 @@ function init(){
 
 } 
 
-function tick(event){
-	stage.update();
-}
 

@@ -1,9 +1,19 @@
+function sortByZ(a,b) {
+	if ((a.z === null) && (b.z === null)) return 0;
+	if (a.z === null) return -1;
+	if (b.z === null) return 1;
+    if (a.z < b.z) return -1;
+    if (a.z > b.z) return 1;
+    return 0;
+}
+
 var Node = Class.extend({
 	objects:null, 
 	parent:null,
 	components:null,//stores a hash of childs with key beying the type of the child. To be used with GetComponent  
 	started:false,
 	scene:null,
+	tick:0,
 	addChild:function(obj){
 		obj.parent = this;
 		this.objects.push(obj);
@@ -48,14 +58,25 @@ var Node = Class.extend({
 		}
 	},
 	FixedUpdate:function(arg){
+		//this.tick ++;
+		
 		for (var i = 0; i < this.objects.length ; i ++){
 			if (this.objects[i] != this  ){
 				this.objects[i].FixedUpdate(arg);
 			}
 		}
+		//if (this.scene&&this.scene.tick <= this.tick){
+			//this.scene.tick ++ 
+			//TODO: change to false only if a z changes
+			//TODO:Optimize this, it takes up to 2% of processing time:
+			this.scene.sortChildren(sortByZ);
+		//}
 	},
 	Start:function(scene){
 		this.scene = scene;
+		/*if (scene){
+			this.scene.tick = this.tick;
+		}*/
 		if (this.started) return;
 		this.started = true;
 		for (var i = 0; i < this.objects.length ; i ++){
