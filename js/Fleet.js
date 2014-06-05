@@ -1,3 +1,11 @@
+function leadingZeros(num,size){
+	num = ""+ num;
+	while (num.length < size){
+		num = "0" + num; 
+	}
+	return num;
+}
+
 Fleet = Transform.extend({
 	ships:15000,
 	engine:null, 
@@ -52,7 +60,7 @@ Fleet = Transform.extend({
  		this.attacking = false;
  		this.fleetNumberText.x = this.transform.x;
  		this.fleetNumberText.y = this.transform.y+70;
- 		this.fleetNumberText.text = Math.floor(this.ships);
+ 		this.fleetNumberText.text = leadingZeros(Math.floor(this.ships),5);
  		if (this.ships <= 0) this.die();
 	},
 	die:function(){
@@ -131,7 +139,7 @@ Fleet = Transform.extend({
 
 
 		//this.fleetNumberText = new createjs.Text("Hello World", "bold 86px Arial", "#ff7700");
-		this.fleetNumberText = new createjs.Text(this.ships,"14px Arial");
+		this.fleetNumberText = new createjs.Text(this.ships,"bold 14px Arial","white");
 		this.fleetNumberText.textAlign = "center"
 		this.fleetNumberText.z = 30;
 		scene.addChild(this.fleetNumberText);
