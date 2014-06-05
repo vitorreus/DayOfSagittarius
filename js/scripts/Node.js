@@ -1,7 +1,6 @@
 function sortByZ(a,b) {
-	if ((a.z === null) && (b.z === null)) return 0;
-	if (a.z === null) return -1;
-	if (b.z === null) return 1;
+	if (a.z === null) a.z = 0;
+	if (b.z === null) b.z = 0;
     if (a.z < b.z) return -1;
     if (a.z > b.z) return 1;
     return 0;

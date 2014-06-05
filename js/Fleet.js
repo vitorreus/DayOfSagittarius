@@ -133,6 +133,7 @@ Fleet = Transform.extend({
 		//this.fleetNumberText = new createjs.Text("Hello World", "bold 86px Arial", "#ff7700");
 		this.fleetNumberText = new createjs.Text(this.ships,"14px Arial");
 		this.fleetNumberText.textAlign = "center"
+		this.fleetNumberText.z = 30;
 		scene.addChild(this.fleetNumberText);
 
 	}, 
