@@ -1,5 +1,6 @@
 Player = Node.extend({
 	selectedFleets:null,
+	fleets:null,
 	color:"#000",
 	init:function(color){
 		this._super(); 
@@ -7,6 +8,8 @@ Player = Node.extend({
 		if (color){
 			this.color = color;
 		}
+		this.fleets  = new Node();
+		this.addChild(this.fleets);
 		
 	},
 	selectFleet:function(fleet){
@@ -23,7 +26,7 @@ Player = Node.extend({
 	//factory method for any new object, usually used for Fleets:
 	construct:function(type){
 		var newObj = new type();
-		this.addChild(newObj);
+		this.fleets.addChild(newObj);
 		return newObj;
 	}
 

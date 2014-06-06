@@ -126,7 +126,7 @@ Fleet = Transform.extend({
 		this.transform.z = 10;
 		this.transform.owner = this;
 
-		this.transform.graphics.beginFill(this.parent.color);
+		this.transform.graphics.beginFill(this.parent.parent.color);
 		//this.transform.graphics.drawCircle(0,0,50);  
 
 		var fleetSize = 50; 
@@ -174,7 +174,7 @@ Fleet = Transform.extend({
 		//just add to list, and afterwards find the nearest to atack
 		if (collisionInfo.collider instanceof PointCollider){
 			//TODO: filter only enemies
-			if (collisionInfo.gameObject.parent != this.parent){ //if its other player
+			if (collisionInfo.gameObject.parent.parent != this.parent.parent){ //if its other player
 				//this.attack(collisionInfo.gameObject);
 				this.inRange.push(collisionInfo.gameObject);
 			}

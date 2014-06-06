@@ -1,4 +1,10 @@
 HumanPlayer  = Player.extend({ 
+	camera:null,
+	init:function(arg){
+		this._super(arg);
+		this.camera = new Camera();
+		//this.addChild(this.camera);
+	},
 	Event:function(e){ 
 		if (e.name == "stagemousedown"){
 			this.moveFleets(new Vector( e.evt.stageX -this.scene.x,e.evt.stageY-this.scene.y));
@@ -16,5 +22,10 @@ HumanPlayer  = Player.extend({
 	 		this.scene.x = rootContainer.canvas.width/2 -this.selectedFleets[0].transform.x;
 	 		this.scene.y = rootContainer.canvas.height/2 -this.selectedFleets[0].transform.y;
  		}
+	},
+	Start:function(scene){
+		this._super(scene);
+
 	}
+
 });

@@ -90,7 +90,7 @@ Space = Node.extend({
 		//this.lines.updateCache();
 		this.FOWMask.graphics.clear();
 		this.FOWMask.graphics.drawRect(this.bounds.x,this.bounds.y,this.bounds.w,this.bounds.h);
-		var fleets = this.GetComponent(HumanPlayer).objects;
+		var fleets = this.GetComponent(HumanPlayer).fleets.objects;
 		
 		while (this.FOWBorders.length > fleets.length  ){
 			var c = this.FOWBorders.pop();

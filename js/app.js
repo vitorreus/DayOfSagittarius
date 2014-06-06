@@ -61,6 +61,11 @@ function handleComplete(){
     // resize the canvas to fill browser window dynamically
     window.addEventListener('resize', resizeCanvas, false);
     resizeCanvas();
+
+    try{
+    	toggleFullScreen();
+   		document.body.requestFullscreen()
+	}catch(e){}
  
 }
 
