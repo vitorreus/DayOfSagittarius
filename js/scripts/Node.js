@@ -64,11 +64,22 @@ var Node = Class.extend({
 				this.objects[i].FixedUpdate(arg);
 			}
 		}
+	},
+	Update:function(arg){
+		//this.tick ++;
+		
+		for (var i = 0; i < this.objects.length ; i ++){
+			if (this.objects[i] != this   &&this.objects[i].Update){
+				this.objects[i].Update(arg);
+			}
+		}
 		//if (this.scene&&this.scene.tick <= this.tick){
 			//this.scene.tick ++ 
 			//TODO: change to false only if a z changes
 			//TODO:Optimize this, it takes up to 2% of processing time:
+		if (this.scene){
 			this.scene.sortChildren(sortByZ);
+		}
 		//}
 	},
 	Start:function(scene){

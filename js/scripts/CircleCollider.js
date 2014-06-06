@@ -6,7 +6,7 @@ CircleCollider  = Collider.extend({
 		this._super(flags);
 		this.radius = radius;
 	},
-	FixedUpdate:function(){
+	Update:function(){
 		this._super();
 		if (!debugPhysics) return;
 		var pos = this.parent.getPosition();

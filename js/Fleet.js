@@ -11,13 +11,12 @@ Fleet = Transform.extend({
 	engine:null, 
 	rotationEngine: null,
 	subSystems:null,
-	baseSpeed:1, //depends on engines engine susbsystem lvl
-	selected:false, //TODO when micromanagement is working
 	attackLine:null,
 	weaponsRange:200,
 	weaponAngle:10,//in deg
 	attacking:false,
-	isAttacking:false,
+	isAttacking:false, //TODO:Remove this
+	attackingTarget:null,
 	inRange:null,
 	fleetNumberText:null,
 	init:function(){
@@ -41,14 +40,10 @@ Fleet = Transform.extend({
 		
 	},
 	FixedUpdate:function(){
-		this.attackLine.graphics.clear();
 		this.inRange = [];
 		this._super();
 		this.attackNearest(this.inRange);
 		
-		
-		/*this.transform.x+= 1;
-		this.transform.y+= 1;  */
 		this.engine.maxSpeed = this.subSystems.getRelativeEnergyLevel("engine");
 		this.engine.acceleration = this.subSystems.getRelativeEnergyLevel("engine");  
 		this.rotationEngine.speed = this.subSystems.getRelativeEnergyLevel("engine"); 
@@ -58,10 +53,20 @@ Fleet = Transform.extend({
  		//TODO: Change on colisoinLeave;
  		this.isAttacking=this.attacking;
  		this.attacking = false;
+ 		if (this.ships <= 0) this.die();
+	},
+	Update:function(){
+		this._super();
+
  		this.fleetNumberText.x = this.transform.x;
  		this.fleetNumberText.y = this.transform.y+70;
  		this.fleetNumberText.text = leadingZeros(Math.floor(this.ships),5);
- 		if (this.ships <= 0) this.die();
+
+		this.attackLine.graphics.clear();
+		//TODO:pul line drawing here
+		if (this.isAttacking && this.attackingTarget){
+			this.drawAttackLine(this.attackingTarget);
+		}
 	},
 	die:function(){
 		this.Destroy();
@@ -84,6 +89,12 @@ Fleet = Transform.extend({
 	receiveDamage:function(dam){
 		this.ships -= (dam-2*dam*this.subSystems.getRelativeEnergyLevel("shield")/3)/1000;
 	},
+	drawAttackLine:function(otherFleet){
+		this.attackLine.graphics.beginStroke("#F00");
+		this.attackLine.graphics
+				.moveTo(this.transform.x+10,this.transform.y+10)//+10 just to diferentiate attacking from attackers
+				.lineTo(otherFleet.transform.x, otherFleet.transform.y );
+	},
 	attack:function(otherFleet){
 		this.attacking = true;
 		if (  this.subSystems.nextEnergyLevel("weapon") > 1){ //if we have energy to fire
@@ -92,16 +103,10 @@ Fleet = Transform.extend({
 				var distance = otherFleet.getPosition().subtract(this.getPosition()).length();
 				this.lookAt(otherFleet.getPosition().add(otherFleet.getSpeed().multiply(700/(distance+1))));
 			}
-			
 			if (angle <= this.weaponAngle){
-
-				
-					this.attackLine.graphics.beginStroke("#F00");
-					this.attackLine.graphics
-							.moveTo(this.transform.x+10,this.transform.y+10)//+10 just to diferentiate attacking from attackers
-							.lineTo(otherFleet.transform.x, otherFleet.transform.y );
 					otherFleet.receiveDamage(this.subSystems.getRelativeEnergyLevel("weapon")*this.ships);
-				 
+				 	this.attackingTarget = otherFleet;
+
 			}
 		}else{this.attacking = false;}
 	},

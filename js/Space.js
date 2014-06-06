@@ -85,7 +85,7 @@ Space = Node.extend({
 
 
 	},
-	FixedUpdate:function(){
+	Update:function(){
 		this._super();
 		//this.lines.updateCache();
 		this.FOWMask.graphics.clear();

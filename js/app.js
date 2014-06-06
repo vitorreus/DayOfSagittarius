@@ -27,15 +27,21 @@ function handleComplete(){
 	fleet1.transform.x = 300;
 	fleet1.transform.y = 300;
 
-
+	//TODO: Normalize fixedUpdate in case of FPS Drop
+	var FixedUpdateRate = 1000/60
 	setInterval( function(a){return function (){a.draw()}}(app),1000 /*60fps*/ ); //try to do dynamic? Or will it be automatically slowed down and fixedupdate will have no problem?
-	setInterval( function(a){return function (){a.FixedUpdate()}}(app),1000/60 /*60fps*/ );
-	
+	setInterval( function(a){return function (){
+		//Decomment for quick n dirty fast forward:
+		//for (var i = 0 ; i < 20; i++)
+			a.FixedUpdate()
+	}}(app),FixedUpdateRate /*60fps*/ );
 
 	function tick(event){
+		app.Update();
 		stage.update();
 	}
 
+	createjs.Ticker.setFPS(60); 
 	createjs.Ticker.addEventListener("tick",tick);
 	//setInterval(tick,1000/60);
 	
