@@ -7,10 +7,14 @@ HumanPlayer  = Player.extend({
 	FixedUpdate:function(){
 		this._super();
 		//TODO: Follow average position of all selected fleets
-		//TODO: Remove the consta 500 with window width
 		if (this.selectedFleets[0]){
-	 		this.scene.x = 500/2 -this.selectedFleets[0].transform.x;
-	 		this.scene.y = 500/2 -this.selectedFleets[0].transform.y;
+			//TODO:Figure out a better way to get the canvas dimension
+			var rootContainer = this.scene;
+			while(rootContainer.parent){
+				rootContainer = rootContainer.parent;
+			}
+	 		this.scene.x = rootContainer.canvas.width/2 -this.selectedFleets[0].transform.x;
+	 		this.scene.y = rootContainer.canvas.height/2 -this.selectedFleets[0].transform.y;
  		}
 	}
 });

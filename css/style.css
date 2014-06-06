@@ -1,6 +1,9 @@
 #energy{
 	vertical-align: bottom;
-	width:300px;
+	width:110px;
+	position:absolute;
+	top:10px;
+	right:10px;
 	
 }
 #energy div{
@@ -24,4 +27,5 @@
 	 position: absolute; bottom: 0; left: 0; 
 }
 
- 
+html, body { width:100%; height:100%;  margin:0; padding:0; }
+canvas { display:block; }

@@ -49,6 +49,18 @@ function handleComplete(){
 	stage.on("stagemousedown", function(evt) {
 		app.Event({name:"stagemousedown",evt:evt});
 	})
+
+	//Fullscreen
+	var canvas = document.getElementById('myCanvas');
+    function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            //need to update the stage on resize to avaid flashing
+            stage.update();
+    }
+    // resize the canvas to fill browser window dynamically
+    window.addEventListener('resize', resizeCanvas, false);
+    resizeCanvas();
  
 }
 
@@ -58,7 +70,4 @@ function init(){
 	queue = new createjs.LoadQueue(false); //pass false to use locally
 	queue.addEventListener("complete",handleComplete)
 	queue.loadManifest([{id:"bg",src:"images/bg.png"}])
-
 } 
-
-
