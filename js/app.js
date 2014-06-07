@@ -57,8 +57,13 @@ function handleComplete(){
 	//special case for whel:
 	$(canvas).bind('mousewheel', function(event) { 
 		//console.log(app)
-	    app.Event({name:"mousewheel",evt:event});
+	    //app.Event({name:"mousewheel",evt:event});
 	}); 
+
+	$(canvas).bind('DOMMouseScroll', function(event) {
+		console.log(event)
+	    app.Event({name:"mousewheel",evt:event});
+	});
  
 
 	//Fullscreen 

@@ -48,7 +48,14 @@ HumanPlayer  = Player.extend({
 		}
 
 		if (e.name == "mousewheel"){ 
-			this.camera.zoom(e.evt.originalEvent.wheelDelta,0.001,new Vector(e.evt.offsetX,e.evt.offsetY));
+			//clientX does not take the canvas offset into account, but since FF does not support offsetX we use this.
+			//TODO: fix this, or put it on app.js before forwarding it
+
+			//Firefox:
+			if (!e.evt.originalEvent.wheelDelta){
+				e.evt.originalEvent.wheelDelta = e.evt.originalEvent.detail*-40;
+			}  
+			this.camera.zoom(e.evt.originalEvent.wheelDelta,0.001,new Vector(e.evt.originalEvent.clientX,e.evt.originalEvent.clientoffsetY));
 		}
 
 		
