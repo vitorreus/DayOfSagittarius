@@ -14,8 +14,9 @@ HumanPlayer  = Player.extend({
 	},
 	Event:function(e){ 
 		if (e.name == "stagemousedown"){
-			this.touchStart = new Vector( e.evt.stageX ,e.evt.stageY);
+			this.touchStart =(new Vector( e.evt.stageX ,e.evt.stageY));
 			this.touchStartCamera =  (this.camera.getPosition());
+			console.log(this.touchStartCamera);
 			this.touching = true; 
 			this.moved = false;
 			
@@ -32,17 +33,22 @@ HumanPlayer  = Player.extend({
 			if (this.touching){
 
 				
-				var touch = new Vector( e.evt.stageX ,e.evt.stageY);
-				var delta = touch.subtract(this.touchStart);
+				var touch = this.camera.toWorldPosition(  new Vector( e.evt.stageX ,e.evt.stageY));
+				console.log(touch);
+				var delta = touch.subtract(this.camera.toWorldPosition(this.touchStart));
 				if (delta.length() > 10){
 					this.moved = true;
 				}
-				console.log(this.camera.getRawPosition());
+				//console.log(this.camera.getRawPosition());
 				this.camera.moveTo(
 					this.touchStartCamera
-					.subtract( delta )	
+					.subtract( delta)	
 				);
 			}
+		}
+
+		if (e.name == "mousewheel"){ 
+			this.camera.zoom(e.evt.originalEvent.wheelDelta,0.001,new Vector(e.evt.offsetX,e.evt.offsetY));
 		}
 
 		

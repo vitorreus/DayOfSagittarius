@@ -111,7 +111,7 @@ Fleet = Transform.extend({
 		}else{this.attacking = false;}
 	},
 	moveTo:function(pos){
-		console.log(pos);
+		//console.log(pos);
 		this.engine.moveTo(pos); 
 		this.lookAt(pos)
 	},
@@ -161,7 +161,7 @@ Fleet = Transform.extend({
 		bmp.x = Math.random()*500;
 		bmp.y = Math.random()*500;
 
-		scene.addChild(bmp);
+		//this.scene.addChild(bmp);
 	},
 	Event:function(e){ 
 		if (e.name == "stagemousedown"){

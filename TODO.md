@@ -1,4 +1,4 @@
-* Make camera
+* Mobile touch and drag
 * Update Quadtree every update
 * Remove Drawing code from fixedUpdate
 * Fix z-index reset when Destroying an object

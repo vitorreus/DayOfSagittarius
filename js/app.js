@@ -2,8 +2,9 @@
 //TODO: put this var insede collider or other physics-related class
 var debugPhysics = false;
 function handleComplete(){
+	var canvas = document.getElementById('myCanvas');
 	var stage;
-	stage = new createjs.Stage("myCanvas");
+	stage = new createjs.Stage(canvas);
 	var enemy = new IAPlayer("#0FF");
 	enemy.selectFleet(enemy.construct(Fleet) );
 	enemy.construct(Fleet) ;
@@ -14,7 +15,7 @@ function handleComplete(){
 	player.selectFleet(fleet1); 
 
 
-	var app  = new Scene();
+	  app  = new Scene();
 
 	var map = new Space();
 	map.addChild(enemy);
@@ -53,8 +54,14 @@ function handleComplete(){
 		})
 	}
 
-	//Fullscreen
-	var canvas = document.getElementById('myCanvas');
+	//special case for whel:
+	$(canvas).bind('mousewheel', function(event) { 
+		//console.log(app)
+	    app.Event({name:"mousewheel",evt:event});
+	}); 
+ 
+
+	//Fullscreen 
     function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
