@@ -1,26 +1,57 @@
 HumanPlayer  = Player.extend({ 
 	camera:null,
+	//TODO: Create a touch class to handle this events. Aka UI class or something
+	touchStart:null,
+	touchStartCamera:null,
+	touchStartCameraWorld:null,
+	touchStartWorld:null,
+	touching:false,
+	moved:false,
 	init:function(arg){
 		this._super(arg);
 		this.camera = new Camera();
-		//this.addChild(this.camera);
+		this.addChild(this.camera);
 	},
 	Event:function(e){ 
 		if (e.name == "stagemousedown"){
-			this.moveFleets(new Vector( e.evt.stageX -this.scene.x,e.evt.stageY-this.scene.y));
+			this.touchStart = new Vector( e.evt.stageX ,e.evt.stageY);
+			this.touchStartCamera =  (this.camera.getPosition());
+			this.touching = true; 
+			this.moved = false;
+			
 		}
+
+		if (e.name == "stagemouseup"){
+			this.touching = false;  
+			if (!this.moved){
+				this.moveFleets(this.camera.toWorldPosition(this.touchStart));
+			}
+		}
+
+		if (e.name == "stagemousemove"){
+			if (this.touching){
+
+				
+				var touch = new Vector( e.evt.stageX ,e.evt.stageY);
+				var delta = touch.subtract(this.touchStart);
+				if (delta.length() > 10){
+					this.moved = true;
+				}
+				console.log(this.camera.getRawPosition());
+				this.camera.moveTo(
+					this.touchStartCamera
+					.subtract( delta )	
+				);
+			}
+		}
+
+		
 	},
 	FixedUpdate:function(){
 		this._super();
 		//TODO: Follow average position of all selected fleets
 		if (this.selectedFleets[0]){
-			//TODO:Figure out a better way to get the canvas dimension
-			var rootContainer = this.scene;
-			while(rootContainer.parent){
-				rootContainer = rootContainer.parent;
-			}
-	 		this.scene.x = rootContainer.canvas.width/2 -this.selectedFleets[0].transform.x;
-	 		this.scene.y = rootContainer.canvas.height/2 -this.selectedFleets[0].transform.y;
+			//this.camera.moveTo(this.selectedFleets[0].getPosition())
  		}
 	},
 	Start:function(scene){

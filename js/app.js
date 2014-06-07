@@ -45,10 +45,13 @@ function handleComplete(){
 	createjs.Ticker.addEventListener("tick",tick);
 	//setInterval(tick,1000/60);
 	
+	var events = ["stagemousedown","stagemousemove","stagemouseup"] ;
 
-	stage.on("stagemousedown", function(evt) {
-		app.Event({name:"stagemousedown",evt:evt});
-	})
+	for (var i in events){
+		stage.on(events[i], function(evt) {
+			app.Event({name:evt.type,evt:evt});
+		})
+	}
 
 	//Fullscreen
 	var canvas = document.getElementById('myCanvas');
