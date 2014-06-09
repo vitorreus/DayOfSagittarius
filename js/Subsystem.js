@@ -124,7 +124,6 @@ SubsystemHandler = Class.extend({
 	},
 	draw:function(arg){
 		//this._super(); dont need to call super?
-		console.log(this.energy);
 		var barsHeight = 100;
 		$("#capacitor div").css({height:(this.energy/this.maxEnergy)*barsHeight});
 		for (var subSystem in this.subSystems.energyLevel){  

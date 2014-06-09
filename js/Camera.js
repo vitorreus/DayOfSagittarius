@@ -2,9 +2,10 @@ Camera = Node.extend({
 	//TODO:Make all of this much better
 	rootContainer:null,
 	moveTo:function(worldPos){
- 		var delta = worldPos.subtract(this.getPosition());
- 		this.scene.x -= delta.x;
- 		this.scene.y -= delta.y;
+ 		//TODO: Use globalToLocal
+		this.scene.x = -(worldPos.x)*this.scene.scaleX+this.rootContainer.canvas.width/2;
+		this.scene.y = -(worldPos.y)*this.scene.scaleY+this.rootContainer.canvas.height/2;
+ 		
 
 	},
 
@@ -14,33 +15,25 @@ Camera = Node.extend({
 		
 		var pos = this.getPosition();
 		//if (byStep == undefined) byStep = .1;;
-		var howMuch = 1+ steps*byStep;
-
-		console.log(this.scene.scaleX);
-		
-		this.scene.scaleX *= howMuch;
-		this.scene.scaleY *= howMuch;
-
-		if (this.scene.scaleX < .55){
-			this.scene.scaleX = .55;
-			this.scene.scaleY = .55;
+		var howMuch =  steps*byStep;
+		if (this.scene.scaleX > 1){
+			howMuch *=2;
 		}
 
+		if (this.scene.scaleX + howMuch > byStep){
+			this.scene.scaleX += howMuch;
+			this.scene.scaleY += howMuch;
+		}
 
 		var worldPosAfterScaling = this.toWorldPosition(screenPos);
 
 		var delta = worldPosAfterScaling.subtract(worldPos);
-		console.log(delta);
  
-		this.moveTo(this.getPosition().subtract(delta.multiply(
-			new Vector (this.scene.scaleX,this.scene.scaleY)
-			)));
+		this.moveTo(this.getPosition().subtract(delta));
 		
 	},
 	//TODO: Inherit Transform?
 	getPosition:function(){
-		/*return new Vector(this.scene.x + this.rootContainer.canvas.width/2,
-			this.scene.y + this.rootContainer.canvas.height/2);*/
 		var pos =  this.toWorldPosition(new Vector(
 				 this.rootContainer.canvas.width/2,
 				 this.rootContainer.canvas.height/2
@@ -49,9 +42,6 @@ Camera = Node.extend({
 		//console.log(pos);
 
 		return pos;
-
-		/*return new Vector(this.scene.x ,
-			this.scene.y ) ;*/
 	},
 
 	/*getRawPosition:function(){

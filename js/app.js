@@ -30,19 +30,48 @@ function handleComplete(){
 
 	//TODO: Normalize fixedUpdate in case of FPS Drop
 	var FixedUpdateRate = 1000/60
+	var MaxFrameRate = 60;
+	var iddleTimeCheckInterval = 500;
+	var iddleTimeMs = iddleTimeCheckInterval;
+
 	setInterval( function(a){return function (){a.draw()}}(app),1000 /*60fps*/ ); //try to do dynamic? Or will it be automatically slowed down and fixedupdate will have no problem?
 	setInterval( function(a){return function (){
 		//Decomment for quick n dirty fast forward:
-		//for (var i = 0 ; i < 20; i++)
+		var start = new Date().getTime();
+		for (var i = 0 ; i < 20; i++)
 			a.FixedUpdate()
+		iddleTimeMs -= new Date().getTime()-start;
 	}}(app),FixedUpdateRate /*60fps*/ );
 
+
+
 	function tick(event){
+		var start = new Date().getTime();
 		app.Update();
 		stage.update();
+		var delta = new Date().getTime()-start;
 	}
 
-	createjs.Ticker.setFPS(60); 
+	 
+	var currentFPS = MaxFrameRate;
+	/*setInterval(
+		function(){
+			if (iddleTimeMs > 0 ){
+				currentFPS*= 1 + iddleTimeMs/iddleTimeCheckInterval;
+			}else{
+				currentFPS = createjs.Ticker.getMeasuredFPS()*1.05;
+			}
+			if (currentFPS > MaxFrameRate){
+				currentFPS = MaxFrameRate;
+			}
+			currentFPS = Math.floor(currentFPS);
+			createjs.Ticker.setFPS(currentFPS);
+			console.log(new Date() .getTime()); 
+			iddleTimeMs = iddleTimeCheckInterval
+		},iddleTimeCheckInterval)*/
+
+	
+	createjs.Ticker.setFPS(MaxFrameRate); 
 	createjs.Ticker.addEventListener("tick",tick);
 	//setInterval(tick,1000/60);
 	
@@ -57,7 +86,7 @@ function handleComplete(){
 	//special case for whel:
 	$(canvas).bind('mousewheel', function(event) { 
 		//console.log(app)
-	    //app.Event({name:"mousewheel",evt:event});
+	    app.Event({name:"mousewheel",evt:event});
 	}); 
 
 	$(canvas).bind('DOMMouseScroll', function(event) {
