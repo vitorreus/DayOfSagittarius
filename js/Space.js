@@ -79,8 +79,18 @@ Space = Node.extend({
 		this.InverseFOWMask.z=10000;
 
 		//roles are inverted because mask does not work, so we are using layer stacking:
-		this.FOWGraphics.addEventListener("click",this.handleMove);
-		this.bg.addEventListener("click",this.handleScout);
+		this.FOWGraphics.addEventListener("click",function(self){
+													return function(e){
+														self.handleMove(e);
+													}
+												}(this)
+		);
+		this.bg.addEventListener("click",		function(self){
+													return function(e){
+														self.handleScout(e);
+													}
+												}(this)
+		);
 
 		//inverted!
 		this.FOWGraphics.hitArea = this.InverseFOWMask; 
@@ -95,10 +105,14 @@ Space = Node.extend({
 
 	},
 	handleMove:function(e){
-		console.log("move")
+		console.log("move");
+		console.log(e);
+		this.Event({name:"seeingClick",evt:e});
 	},
 	handleScout:function(e){
-		 console.log("scout")
+		console.log("scout");
+		console.log(e);
+		this.Event({name:"fogClick",evt:e});
 	},
 	Update:function(){
 		this._super();

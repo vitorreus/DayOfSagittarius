@@ -21,11 +21,21 @@ HumanPlayer  = Player.extend({
 			
 		}
 
-		if (e.name == "stagemouseup"){
-			this.touching = false;  
+		if (e.name == "stagemouseup" ){
+			this.touching = false; 
+		}
+
+		if (e.name == "seeingClick"){
+			 
 			if (!this.moved){
 				this.moveFleets(this.camera.toWorldPosition(this.touchStart));
 			}
+		}
+
+		if (e.name == "fogClick"){
+			 
+			//new scout
+			//sout moveto click
 		}
 
 		if (e.name == "stagemousemove"){
