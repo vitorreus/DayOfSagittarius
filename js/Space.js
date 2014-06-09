@@ -6,6 +6,7 @@ Space = Node.extend({
 	FOWGraphics:null,
 	bounds:null,
 	FOWMask:null,
+	InverseFOWMask:null,
 	FOWBorders:null,
 	bg:null,
 	Start:function(scene){
@@ -62,8 +63,6 @@ Space = Node.extend({
 
 
 		
-
-
 		this.bg = new createjs.Shape()
 		this.bg.z = 0;
 		this.bg.graphics.beginFill("#1f263d").drawRect(this.bounds.x,this.bounds.y,this.bounds.w,this.bounds.h);
@@ -75,7 +74,17 @@ Space = Node.extend({
 		//
 
 
+		//we are using a dirty trick here to discern between move and scout. 
+		this.InverseFOWMask = new createjs.Shape();
+		this.InverseFOWMask.z=10000;
 
+		//roles are inverted because mask does not work, so we are using layer stacking:
+		this.FOWGraphics.addEventListener("click",this.handleMove);
+		this.bg.addEventListener("click",this.handleScout);
+
+		//inverted!
+		this.FOWGraphics.hitArea = this.InverseFOWMask; 
+		//this.container.addChild(this.FOWGraphics.hitArea);
 		//this.FOWGraphics.cache(0,0, 150,150);
 		
 
@@ -85,11 +94,20 @@ Space = Node.extend({
 
 
 	},
+	handleMove:function(e){
+		console.log("move")
+	},
+	handleScout:function(e){
+		 console.log("scout")
+	},
 	Update:function(){
 		this._super();
 		//this.lines.updateCache();
 		this.FOWMask.graphics.clear();
-		this.FOWMask.graphics.drawRect(this.bounds.x,this.bounds.y,this.bounds.w,this.bounds.h);
+		this.InverseFOWMask.graphics.clear(); //Is this needed?
+		//this.FOWMask.graphics.f("#f00").dc(100,100,70);
+		//return ;
+		this.FOWMask.graphics.f("#f00").drawRect(this.bounds.x,this.bounds.y,this.bounds.w,this.bounds.h);
 		var fleets = this.GetComponent(HumanPlayer).fleets.objects;
 		
 		while (this.FOWBorders.length > fleets.length  ){
@@ -100,14 +118,14 @@ Space = Node.extend({
 
 
 		for (var i in fleets){
-			this.FOWMask.graphics.arc(fleets[i].transform.x,fleets[i].transform.y,200,0,Math.PI*2,true);
+			this.FOWMask.graphics.f("#f00").arc(fleets[i].transform.x,fleets[i].transform.y,200,0,Math.PI*2,true);
 			if (!this.FOWBorders[i]){
 				this.FOWBorders.push(new createjs.Shape());
 				this.scene.addChild(this.FOWBorders[i]);
 				this.FOWBorders[i].graphics.beginStroke ("#080c10").drawCircle(0,0,200);
 				this.FOWBorders[i].z = 50
 			} 
-			
+			this.InverseFOWMask.graphics.f("#f00").drawCircle(fleets[i].transform.x,fleets[i].transform.y,200);
 			 
 			this.FOWBorders[i].x = fleets[i].transform.x;
 			this.FOWBorders[i].y = fleets[i].transform.y;
