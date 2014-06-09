@@ -13,10 +13,14 @@ var Node = Class.extend({
 	started:false,
 	scene:null,
 	tick:0,
+	_started:false,
 	addChild:function(obj){
 		obj.parent = this;
 		this.objects.push(obj);
 		this.components[obj.constructor] = obj;
+		if (this._started){
+			obj.Start(this.scene);
+		}
 	},
 	init:function(){
 		this.objects = [];
@@ -83,6 +87,7 @@ var Node = Class.extend({
 		//}
 	},
 	Start:function(scene){
+		this._started = true;
 		this.scene = scene;
 		/*if (scene){
 			this.scene.tick = this.tick;

@@ -32,8 +32,14 @@ HumanPlayer  = Player.extend({
 			}
 		}
 
-		if (e.name == "fogClick"){
-			 
+		if (e.name == "fogClick" && !this.moved){
+			var scout = this.construct(Scout);
+			console.log(new Vector( e.evt.stageX ,e.evt.stageY));
+			//Todo: Find nearest player object to the destination, to find out from where the fleet should come
+			
+			scout.transform.x = this.selectedFleets[0].transform.x;
+			scout.transform.y = this.selectedFleets[0].transform.y;
+			scout.moveTo(this.camera.toWorldPosition(this.touchStart));
 			//new scout
 			//sout moveto click
 		}

@@ -1,3 +1,5 @@
+* 1 common parent Class for Fleet and Scout
+* Fix fog composite
 * Mobile touch and drag
 * Mobile pinch
 * Update Quadtree every update

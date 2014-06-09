@@ -7,7 +7,7 @@ function handleComplete(){
 	stage = new createjs.Stage(canvas);
 	var enemy = new IAPlayer("#0FF");
 	enemy.selectFleet(enemy.construct(Fleet) );
-	enemy.construct(Fleet) ;
+	enemy.construct(Fleet) ;enemy.construct(Fleet) ;enemy.construct(Fleet) ;enemy.construct(Fleet) ;enemy.construct(Fleet) ;
  
 	var player = new HumanPlayer("#00F");
 	var fleet1 = player.construct(Fleet);

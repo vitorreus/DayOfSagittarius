@@ -94,6 +94,13 @@ Space = Node.extend({
 
 		//inverted!
 		this.FOWGraphics.hitArea = this.InverseFOWMask; 
+
+		//this.container.addChild(this.InverseFOWMask);
+
+		this.InverseFOWMask.z = 1;
+		//this.InverseFOWMask.compositeOperation= "destination-out";
+		//this.FOWMask.z = 10000;
+		//this.container.addChild(this.FOWMask);
 		//this.container.addChild(this.FOWGraphics.hitArea);
 		//this.FOWGraphics.cache(0,0, 150,150);
 		
@@ -121,7 +128,6 @@ Space = Node.extend({
 		this.InverseFOWMask.graphics.clear(); //Is this needed?
 		//this.FOWMask.graphics.f("#f00").dc(100,100,70);
 		//return ;
-		this.FOWMask.graphics.f("#f00").drawRect(this.bounds.x,this.bounds.y,this.bounds.w,this.bounds.h);
 		var fleets = this.GetComponent(HumanPlayer).fleets.objects;
 		
 		while (this.FOWBorders.length > fleets.length  ){
@@ -132,7 +138,8 @@ Space = Node.extend({
 
 
 		for (var i in fleets){
-			this.FOWMask.graphics.f("#f00").arc(fleets[i].transform.x,fleets[i].transform.y,200,0,Math.PI*2,true);
+			this.FOWMask.graphics.moveTo(fleets[i].transform.x,fleets[i].transform.y);
+			this.FOWMask.graphics.f("#f00").arc(fleets[i].transform.x,fleets[i].transform.y,200,0,Math.PI*2,true).cp().ef();
 			if (!this.FOWBorders[i]){
 				this.FOWBorders.push(new createjs.Shape());
 				this.scene.addChild(this.FOWBorders[i]);
@@ -144,6 +151,8 @@ Space = Node.extend({
 			this.FOWBorders[i].x = fleets[i].transform.x;
 			this.FOWBorders[i].y = fleets[i].transform.y;
 		}
+		this.FOWMask.graphics.f("#f00").drawRect(this.bounds.x,this.bounds.y,this.bounds.w,this.bounds.h).cp().ef();
+		
 
 		
 	}
