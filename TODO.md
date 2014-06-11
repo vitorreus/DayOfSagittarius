@@ -1,4 +1,5 @@
 * Change fog alpha map size to canvas, and put it out of the camera.
+* Or, dynamicaly tesselate a poly mask 
 * 1 common parent Class for Fleet and Scout
 * Fix fog composite
 * Mobile touch and drag

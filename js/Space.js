@@ -155,7 +155,7 @@ Space = Node.extend({
 			//this.FOWMask.graphics.moveTo(fleets[i].transform.x,fleets[i].transform.y);
 			//this.FOWMask.graphics.f("#f00").arc(fleets[i].transform.x,fleets[i].transform.y,200,0,Math.PI*2,true).cp().ef();
 			
-			//this.InverseFOWMask.graphics.f("#f00").drawCircle(fleets[i].transform.x,fleets[i].transform.y,200);
+			this.InverseFOWMask.graphics.f("#f00").drawCircle(fleets[i].transform.x,fleets[i].transform.y,200);
 			 
 			this.FOWAlphaMap.graphics.f("#000").dc(fleets[i].transform.x,fleets[i].transform.y,200);
 		}
