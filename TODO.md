@@ -1,3 +1,4 @@
+* Change fog alpha map size to canvas, and put it out of the camera.
 * 1 common parent Class for Fleet and Scout
 * Fix fog composite
 * Mobile touch and drag

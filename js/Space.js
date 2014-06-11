@@ -7,7 +7,7 @@ Space = Node.extend({
 	bounds:null,
 	FOWMask:null,
 	InverseFOWMask:null,
-	FOWBorders:null,
+	FOWAlphaMap:null,
 	bg:null,
 	Start:function(scene){
 
@@ -44,6 +44,20 @@ Space = Node.extend({
 		
 		}
 
+		//filter:
+		var removeThisVar = 1000
+		this.FOWAlphaMap = new createjs.Shape();
+		this.FOWAlphaMap.graphics.f("#fff").drawRect(0, 0, removeThisVar, removeThisVar).ef();
+		this.FOWAlphaMap.graphics.f("#000").dc(100,100,200);
+		this.FOWAlphaMap.cache(0, 0, removeThisVar, removeThisVar);
+		
+		
+		
+		//this.scene.addChild(this.FOWAlphaMap);
+		//this.FOWAlphaMap.z = 500;
+		//box.graphics.beginLinearGradientFill(["#000000", "rgba(0, 0, 0, 0)"], [0, 1], 0, 0, lineSize, lineSize)
+		//box.graphics.drawRect(0, 0, lineSize, lineSize);
+		
 		
 
 		// masks can only be shapes.
@@ -52,16 +66,16 @@ Space = Node.extend({
 
 		// only the drawPolyStar call is needed for the mask to work:
 		//this.FOWMask.graphics.beginStroke("#FF0")
-		this.FOWBorders = [];
 		this.FOWGraphics = new createjs.Shape()
-		this.FOWGraphics.mask = this.FOWMask;
+		this.FOWGraphics.filters = [new createjs.AlphaMapFilter(this.FOWAlphaMap.cacheCanvas)];
+		
 		this.FOWGraphics.z = 100
 		
 		this.linesOutside.mask = this.FOWMask;
 
 		this.FOWGraphics.graphics.beginFill("#080c10").drawRect(this.bounds.x,this.bounds.y,this.bounds.w,this.bounds.h);
 
-
+		this.FOWGraphics.cache(0,0,removeThisVar,removeThisVar);
 		
 		this.bg = new createjs.Shape()
 		this.bg.z = 0;
@@ -126,34 +140,30 @@ Space = Node.extend({
 		//this.lines.updateCache();
 		this.FOWMask.graphics.clear();
 		this.InverseFOWMask.graphics.clear(); //Is this needed?
+		this.FOWAlphaMap.graphics.clear();
 		//this.FOWMask.graphics.f("#f00").dc(100,100,70);
 		//return ;
 		var fleets = this.GetComponent(HumanPlayer).fleets.objects;
 		
-		while (this.FOWBorders.length > fleets.length  ){
-			var c = this.FOWBorders.pop();
-			this.scene.removeChild(c);
-			delete c;
-		}
-
+		var removeThisVar = 1000;//todo change this with canvas bounds, get from camera, etc
+		this.FOWAlphaMap.graphics.f("#fff").drawRect(0, 0, removeThisVar, removeThisVar).ef();
+		
+		
+		
 
 		for (var i in fleets){
-			this.FOWMask.graphics.moveTo(fleets[i].transform.x,fleets[i].transform.y);
-			this.FOWMask.graphics.f("#f00").arc(fleets[i].transform.x,fleets[i].transform.y,200,0,Math.PI*2,true).cp().ef();
-			if (!this.FOWBorders[i]){
-				this.FOWBorders.push(new createjs.Shape());
-				this.scene.addChild(this.FOWBorders[i]);
-				this.FOWBorders[i].graphics.beginStroke ("#080c10").drawCircle(0,0,200);
-				this.FOWBorders[i].z = 50
-			} 
-			this.InverseFOWMask.graphics.f("#f00").drawCircle(fleets[i].transform.x,fleets[i].transform.y,200);
+			//this.FOWMask.graphics.moveTo(fleets[i].transform.x,fleets[i].transform.y);
+			//this.FOWMask.graphics.f("#f00").arc(fleets[i].transform.x,fleets[i].transform.y,200,0,Math.PI*2,true).cp().ef();
+			
+			//this.InverseFOWMask.graphics.f("#f00").drawCircle(fleets[i].transform.x,fleets[i].transform.y,200);
 			 
-			this.FOWBorders[i].x = fleets[i].transform.x;
-			this.FOWBorders[i].y = fleets[i].transform.y;
+			this.FOWAlphaMap.graphics.f("#000").dc(fleets[i].transform.x,fleets[i].transform.y,200);
 		}
 		this.FOWMask.graphics.f("#f00").drawRect(this.bounds.x,this.bounds.y,this.bounds.w,this.bounds.h).cp().ef();
 		
-
+		this.FOWAlphaMap.updateCache(true);
+		this.FOWGraphics.filters = [new createjs.AlphaMapFilter(this.FOWAlphaMap.cacheCanvas)];
+		this.FOWGraphics.updateCache(true);
 		
 	}
 
