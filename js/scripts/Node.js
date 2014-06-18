@@ -81,10 +81,20 @@ var Node = Class.extend({
 			//this.scene.tick ++ 
 			//TODO: change to false only if a z changes
 			//TODO:Optimize this, it takes up to 2% of processing time:
+		/*if (this.scene){
+			this.scene.sortChildren(sortByZ);
+		}*/
+		//}
+	},
+	SortZIndex:function(){
 		if (this.scene){
 			this.scene.sortChildren(sortByZ);
 		}
-		//}
+		for (var i = 0; i < this.objects.length ; i ++){
+			if (this.objects[i] != this && this.objects[i].SortZIndex){
+				this.objects[i].SortZIndex();
+			}
+		}
 	},
 	Start:function(scene){
 		this._started = true;
@@ -99,6 +109,8 @@ var Node = Class.extend({
 				this.objects[i].Start(scene);
 			}
 		}
+		this.SortZIndex();
+		//this.SendMessageUpwards("SortZIndex");
 	},
 	//standard function to propagate anything to all objects:
 	Event:function(e){

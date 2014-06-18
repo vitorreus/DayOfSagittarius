@@ -5,31 +5,27 @@ function handleComplete(){
 	var canvas = document.getElementById('myCanvas');
 	var stage;
 	stage = new createjs.Stage(canvas);
-	var enemy = new IAPlayer("#0FF");
-	enemy.selectFleet(enemy.construct(Fleet) );
-	enemy.construct(Fleet) ;enemy.construct(Fleet) ;enemy.construct(Fleet) ;enemy.construct(Fleet) ;enemy.construct(Fleet) ;
- 
-	var player = new HumanPlayer("#00F");
-	var fleet1 = player.construct(Fleet);
-	//fleet1.ships = 100;
-	player.selectFleet(fleet1); 
-
-
-	  app  = new Scene();
-
-	var map = new Space();
-	map.addChild(enemy);
-	map.addChild(player);
-
-	app.addChild(map);
 	
+
+	app  = new Scene();
+	
+
+	var player = new HumanPlayer("#f00");
+
+	function p(x,y){return {'x':x,'y':y}}
+
+	var vertices = [];
+
+	for (var i = 0;i<50;i++){
+		vertices.push(p(Math.random()*500,Math.random()*500));
+	}
+
+	player.addChild(new Graph(vertices));
+	app.addChild(player);
 	app.Start(stage);
 
-	fleet1.transform.x = 300;
-	fleet1.transform.y = 300;
-
 	//TODO: Normalize fixedUpdate in case of FPS Drop
-	var FixedUpdateRate = 1000/60
+	var FixedUpdateRate = 1000/120
 	var MaxFrameRate = 60;
 	var iddleTimeCheckInterval = 500;
 	var iddleTimeMs = iddleTimeCheckInterval;
